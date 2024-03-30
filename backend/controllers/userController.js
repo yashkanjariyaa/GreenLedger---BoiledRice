@@ -54,4 +54,17 @@ exports.updateUser = async (req, res) => {
     }
 };
 
+exports.getUserByUsername = async (req, res) => {
+  try {
+      const { userEmail } = req.body;
+      console.log(userEmail)
+      console.log('Received email:', userEmail); // Log the received email
+      // Process the email further (e.g., update user information)
+      res.status(200).json({ message: 'User information submitted successfully' });
+  } catch (error) {
+      console.error('Error submitting user information:', error);
+      res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 

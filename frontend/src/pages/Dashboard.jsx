@@ -10,8 +10,8 @@ import notif from "../assets/Dashboard/notif.svg";
 import Leaderboard from "../components/Leaderboard";
 import WasteBar from "../components/WasteBar";
 import Sidebar from "../components/Sidebar";
-import { useNavigate } from "react-router-dom"
-
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC9f29nQHK-XJifHGXKZnaN_EhS2lHOkbA",
@@ -41,8 +41,20 @@ const Dashboard = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      localStorage.removeItem('email')
+      localStorage.removeItem("email");
       navigate("/login"); // Redirect to login page after logout
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
+
+  const handleUserInfo = async () => {
+    try {
+      const userEmail = localStorage.getItem("email");
+      console.log(userEmail)
+      await axios.post("http://localhost:3000/api/getusername", {
+        userEmail,
+      });
     } catch (error) {
       console.error("Error signing out:", error);
     }
@@ -64,9 +76,18 @@ const Dashboard = () => {
             <button className="px-2 py-1 rounded-xl  max-md:hidden">
               <img src={notif} alt="" className="w-7 inline-block" />
             </button>
-            <button className="p-3 rounded-xl bg-[#f9d85a] font-bold" onClick={handleLogout}>
+            <button
+              className="p-3 rounded-xl bg-[#f9d85a] font-bold"
+              onClick={handleLogout}
+            >
               <FontAwesomeIcon icon={faSignOutAlt} className="px-1" />
               <span className="lg:inline-block hidden">Logout</span>
+            </button>
+            <button
+              className="p-3 rounded-xl bg-[#f9d85a] font-bold"
+              onClick={handleUserInfo}
+            >
+              <span className="lg:inline-block hidden">info</span>
             </button>
           </div>
         </div>
