@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const userUpdateController = require('../controllers/userInfo/userUpdateController');
-const retrieveUserController = require('../controllers/userInfo/retrieveUpdateController');
+const userUpdateController = require('../controllers/userDataContractController/userUpdateController');
+const retrieveUserController = require('../controllers/userDataContractController/retrieveUpdateController');
 
 router.use(express.json());
 
