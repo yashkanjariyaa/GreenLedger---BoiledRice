@@ -34,7 +34,7 @@ const Activity = () => {
   }, []);
 
   return (
-    <div className="bg-gray-200 h-[27rem] w-[30rem] rounded-xl">
+    <div className="border-2 h-[27rem] w-[28rem] max-sm:w-[70vw] rounded-xl">
       <div className="acttable flex flex-col overflow-y-scroll h-[27rem] w-full p-5">
         {users.map((user) => {
           return (
