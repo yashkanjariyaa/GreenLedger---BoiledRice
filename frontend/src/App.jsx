@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Learn from "./pages/Learn";
 import Location from "./pages/Location";
+import LeafMap from "./components/LeafMap";
 
 const App = () => {
   return (
