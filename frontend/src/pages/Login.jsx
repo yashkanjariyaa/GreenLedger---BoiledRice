@@ -90,7 +90,7 @@ const Login = () => {
       });
 
       console.log(response)
-  
+      localStorage.setItem('email', email);
       // If login is successful on the backend
       if (response.status === 200) {
         navigate("/dashboard"); // Redirect to dashboard on successful login
@@ -123,6 +123,14 @@ const Login = () => {
       navigate("/dashboard"); // Redirect to dashboard on successful registration
     } catch (error) {
       setError(error.message);
+    }
+  };
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate("/login"); // Redirect to login page after logout
+    } catch (error) {
+      console.error("Error signing out:", error);
     }
   };
 

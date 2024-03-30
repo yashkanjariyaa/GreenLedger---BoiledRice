@@ -1,3 +1,4 @@
+// UserModel.js
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
@@ -5,7 +6,10 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
-    dob: { type: Date, required: true }
+    dob: { type: Date, required: true },
+    pincode: { type: String },
+    registrationDate: { type: Date, default: Date.now },
+    isVerified: { type: Boolean, default: false } // Added for user verification
 });
 
 const User = mongoose.model('User', userSchema);

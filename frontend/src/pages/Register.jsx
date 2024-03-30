@@ -33,6 +33,7 @@ const Register = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [dob, setDob] = useState("");
+  const [pincode, setPincode] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate(); // Get the navigate function for redirection
 
@@ -80,24 +81,24 @@ const Register = () => {
 
   const handleLogin = async () => {
     setError(null);
-  
+
     try {
       // Send login data to backend
-       await axios.post('http://localhost:3000/api/auth/login', {
+      await axios.post("http://localhost:3000/api/auth/login", {
         email,
-        password
+        password,
       });
 
-    //   console.log(response)
-  
+      //   console.log(response)
+
       // If login is successful on the backend
       if (response.status === 200) {
         navigate("/dashboard"); // Redirect to dashboard on successful login
       } else {
-        setError('Login failed'); // Display error message if login fails
+        setError("Login failed"); // Display error message if login fails
       }
     } catch (error) {
-      setError('Login failed'); // Display error message if login fails
+      setError("Login failed"); // Display error message if login fails
     }
   };
 
@@ -136,6 +137,7 @@ const Register = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded-md"
+            required
           />
         </div>
         <div className="mb-4">
@@ -145,58 +147,72 @@ const Register = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded-md"
+            required
           />
         </div>
-            <div className="mb-4">
-              <input
-                type="password"
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md"
-              />
-            </div>
-            <div className="mb-4">
-              <input
-                type="text"
-                placeholder="First Name"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md"
-              />
-            </div>
-            <div className="mb-4">
-              <input
-                type="text"
-                placeholder="Last Name"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md"
-              />
-            </div>
-            <div className="mb-4">
-              <input
-                type="date"
-                placeholder="Date of Birth"
-                value={dob}
-                onChange={(e) => setDob(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md"
-              />
-            </div>
-            <button
-              onClick={handleRegister}
-              className="w-full bg-blue-500 text-white py-2 rounded-md"
-            >
-              Register
-            </button>
-            <p className="text-sm mt-2">
-              Already have an account?{" "}
-              <button
-                className="text-blue-500"
-              >
-                <Link to="/login">Login here</Link>
-              </button>
-            </p>
+        <div className="mb-4">
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="First Name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="Last Name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <input
+            type="date"
+            placeholder="Date of Birth"
+            value={dob}
+            onChange={(e) => setDob(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-md"
+          />
+        </div>
+        <div className="mb-4">
+          <input
+            type="number"
+            placeholder="Pincode"
+            value={pincode}
+            onChange={(e) => setPincode(e.target.value)}
+            inputMode="numeric" // Disable spinner controls
+            className="w-full p-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+
+        <button
+          onClick={handleRegister}
+          className="w-full bg-blue-500 text-white py-2 rounded-md"
+        >
+          Register
+        </button>
+        <p className="text-sm mt-2">
+          Already have an account?{" "}
+          <button className="text-blue-500">
+            <Link to="/login">Login here</Link>
+          </button>
+        </p>
         <button
           onClick={handleGoogleRegister}
           className="w-full bg-red-500 text-white py-2 rounded-md mt-2"
