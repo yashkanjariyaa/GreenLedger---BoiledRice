@@ -220,4 +220,16 @@ exports.getActivity = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+exports.getcalenderitems = async (req, res) => {
+  try {
+    // Fetch users
+    const{ email } = req.query;
+    const user = await User.findOne({ email });
+    const OverallData = await UserRecords.findOne({ username: user.username });
+    res.status(200).json(OverallData);
+  } catch (error) {
+    console.error("Error fetching activity:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
 
