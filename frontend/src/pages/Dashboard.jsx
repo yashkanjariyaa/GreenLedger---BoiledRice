@@ -59,10 +59,10 @@ const Dashboard = () => {
               <h1 className="font-bold text-2xl">My Progress</h1>
             </div>
             <div className="flex gap-10 max-xl:flex-col">
-              <div className="my-5 w-[45rem] max-lg:w-[40rem]  max-md:w-[35rem]   max-sm:w-[25rem]">
+              <div className="my-5 w-[45rem] max-lg:w-[40rem]  max-md:w-[35rem]   max-sm:w-[22rem]">
                 <Leaderboard id={6} />
               </div>
-              <div className="my-5 w-[43rem] max-lg:w-[40rem]  max-md:w-[35rem]   max-sm:w-[25rem]">
+              <div className="my-5 w-[43rem] max-lg:w-[40rem]  max-md:w-[35rem]   max-sm:w-[22rem]">
                 <WasteBar />
               </div>
             </div>
