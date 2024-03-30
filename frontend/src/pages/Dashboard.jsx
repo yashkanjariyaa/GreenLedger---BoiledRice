@@ -1,17 +1,33 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setIndex } from "../slices/generalSlice";
-
+import { getAuth, signOut } from "firebase/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-
+import { initializeApp } from "firebase/app";
 import coin from "../assets/Dashboard/coin.svg";
 import notif from "../assets/Dashboard/notif.svg";
 import Leaderboard from "../components/Leaderboard";
 import WasteBar from "../components/WasteBar";
 import Sidebar from "../components/Sidebar";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC9f29nQHK-XJifHGXKZnaN_EhS2lHOkbA",
+  authDomain: "aceofhacks-c3cc1.firebaseapp.com",
+  projectId: "aceofhacks-c3cc1",
+  storageBucket: "aceofhacks-c3cc1.appspot.com",
+  messagingSenderId: "852739775747",
+  appId: "1:852739775747:web:f30589fefd4aeea72e1d36",
+  measurementId: "G-YXR4Y2EJVR",
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -20,6 +36,28 @@ const Dashboard = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      localStorage.removeItem("email");
+      navigate("/login"); // Redirect to login page after logout
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
+
+  const handleUserInfo = async () => {
+    try {
+      const userEmail = localStorage.getItem("email");
+      console.log(userEmail)
+      await axios.post("http://localhost:3000/api/getusername", {
+        userEmail,
+      });
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
   };
 
   return (
@@ -38,9 +76,18 @@ const Dashboard = () => {
             <button className="px-2 py-1 rounded-xl  max-md:hidden">
               <img src={notif} alt="" className="w-7 inline-block" />
             </button>
-            <button className="p-3 rounded-xl bg-[#f9d85a] font-bold">
+            <button
+              className="p-3 rounded-xl bg-[#f9d85a] font-bold"
+              onClick={handleLogout}
+            >
               <FontAwesomeIcon icon={faSignOutAlt} className="px-1" />
               <span className="lg:inline-block hidden">Logout</span>
+            </button>
+            <button
+              className="p-3 rounded-xl bg-[#f9d85a] font-bold"
+              onClick={handleUserInfo}
+            >
+              <span className="lg:inline-block hidden">info</span>
             </button>
           </div>
         </div>

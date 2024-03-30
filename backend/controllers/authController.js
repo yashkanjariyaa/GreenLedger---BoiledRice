@@ -3,20 +3,14 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 const register = async (req, res) => {
-  try {
-    const { email, password, firstName, lastName, dob } = req.body;
+    try {
+        const { email, password, firstName, lastName, dob, pincode, username } = req.body;
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds
 
-    // Create new user instance with hashed password
-    const user = new User({
-      email,
-      password: hashedPassword,
-      firstName,
-      lastName,
-      dob,
-    });
+        // Create new user instance with hashed password
+        const user = new User({ email, password: hashedPassword, firstName, lastName, dob, pincode, username});
 
     // Save user to database
     await user.save();
