@@ -64,7 +64,7 @@ const login = async (req, res) => {
 
 const Address = require("../models/Address");
 
-const storeWalletController = async (req, res) => {
+const wallet = async (req, res) => {
   try {
     const userData = req.body;
     const userInfo = JSON.parse(userData.userInfo);
@@ -102,8 +102,6 @@ const storeWalletController = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
-module.exports = storeWalletController;
 
 module.exports = {
   register,
