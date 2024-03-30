@@ -1,36 +1,64 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import LeafMap from '../components/LeafMap';
+
+import { useDispatch } from "react-redux";
+import {setIndex} from '../slices/generalSlice'
 
 const Location = () => {
-  const [pincode, setPincode] = useState('');
+  
+  const [mapCenter, setMapCenter] = useState(null);
+  const [userLocationAvailable, setUserLocationAvailable] = useState(false);
 
-  const handlePincodeChange = (event) => {
-    setPincode(event.target.value);
-  };
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setIndex(4))
+  }, [])
 
-  const handleSearch = () => {
-    // Implement your search logic here using the pincode state
-    console.log('Searching for pincode:', pincode);
+  useEffect(() => {
+    // Check if geolocation is available on mount
+    if (navigator.geolocation) {
+      setUserLocationAvailable(true);
+    }
+  }, []);
+
+  const handleGetLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setMapCenter({ lat: latitude, lng: longitude });
+          console.log(mapCenter)
+        },
+        (error) => {
+          console.error('Error getting location:', error);
+          // Handle errors here
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser.');
+      // Handle unsupported browser here
+    }
   };
 
   return (
     <div className="">
       <Sidebar />
       <div className="ml-[60px]">
-        <div className='ml-[-60px] flex items-center rounded-lg p-4 justify-center'>
-        <input 
-          type="text" 
-          placeholder="Enter Pincode" 
-          value={pincode} 
-          onChange={handlePincodeChange} 
-          className="px-4 py-2 rounded-l-md border"
-        />
-        <button onClick={handleSearch} className="px-4 py-2 bg-gray-400 text-white rounded-r-md hover:bg-gray-500 focus:outline-none">
-          <FontAwesomeIcon icon={faSearch} />
-        </button>
+        <div className="ml-[-60px] flex items-center rounded-lg p-4 justify-center">
+          {userLocationAvailable && (
+            <button
+              onClick={handleGetLocation}
+              className="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500 focus:outline-none"
+            >
+              <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2" />
+              Get Location
+            </button>
+          )}
         </div>
+        <LeafMap center={mapCenter} />
       </div>
     </div>
   );
