@@ -84,12 +84,12 @@ const Login = () => {
   
     try {
       // Send login data to backend
-       await axios.post('http://localhost:3000/api/auth/login', {
+      const response = await axios.post('http://localhost:3000/api/auth/login', {
         email,
         password
       });
 
-    //   console.log(response)
+      console.log(response)
   
       // If login is successful on the backend
       if (response.status === 200) {
@@ -160,14 +160,6 @@ const Login = () => {
                 className="text-blue-500"
               >
                 <Link to="/register">Register here</Link>
-              </button>
-            </p>
-            <p className="text-sm mt-2">
-              Already have an account?{" "}
-              <button
-                className="text-blue-500"
-              >
-                Login here
               </button>
             </p>
         <button
