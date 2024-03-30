@@ -1,6 +1,6 @@
-const web3 = require('web3');
-const web3 = Web3('HTTP://127.0.0.1:7545');
-const abi = require("../../../web3/build/contracts/UserDataContract.json");
+const { Web3 } = require('web3');
+const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+const abi = require("../../../web3/build/contracts/UserDataContract.json").abi;
 const address = process.env.USER_DATA_CONTRACT;
 const contract = new web3.eth.Contract(abi, address);
 

@@ -1,8 +1,8 @@
-const Web3 = require("web3");
-const web3 = new Web3("http://127.0.0.1:7545");
-const abi = require("../../../web3/build/contracts/UserDataContract.json");
+const {Web3} = require("web3");
+const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+const abi = require("../../../web3/build/contracts/UserDataContract.json").abi;
 const contractAddress = process.env.USER_DATA_CONTRACT;
-const contract = new web3.eth.Contract(abi, contractAddress);
+const contract = new web3.eth.Contract(abi);
 
 async function recoverAccount(message, signature) {
   const recoveredPublicKey = await web3.eth.accounts.recover(
@@ -20,13 +20,14 @@ async function getCurrentUserData(tokenId) {
 
 const userUpdateController = async (req, res) => {
   try {
-    const { adminUsername, username, totalDays, dailyPlan, signature, tokenId } =
+    const { adminUsername, username, totalDays, dates, dailyPlan, signature, tokenId } =
       req.body;
       const currentData = getCurrentUserData(tokenId);
     if (
       currentData.adminUsername === adminUsername &&
       currentData.totalDays === totalDays &&
-      currentData.dailyPlan === dailyPlan
+      currentData.dailyPlan === dailyPlan &&
+      currentData.dates === dates
     ) {
       // If data is the same, no need to update
       return res
@@ -45,14 +46,18 @@ const userUpdateController = async (req, res) => {
         encodedABI = contract.methods.updateUsername(tokenId, username).encodeABI();
     }
     if(currentData.totalDays != totalDays){
-        totalDays = contract.methods.updateTotalDays(tokenId, totalDays).encodeABI();
+        encodedABI = contract.methods.updateTotalDays(tokenId, totalDays).encodeABI();
     }
+    if(currentData.dates != dates){
+      encodedABI = contract.methods.updateDates(tokenId, totalDays).encodeABI();
+  }
 
     const message = web3.utils.soliditySha3(
       adminUsername,
       username,
       totalDays,
-      dailyPlan
+      dailyPlan,
+      dates
     );
     const account = await recoverAccount(message, signature);
 

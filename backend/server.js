@@ -1,8 +1,11 @@
 const express = require('express');
 const app = express();
+app.use(express.json()); 
 require('dotenv').config();
 const connectDatabase = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
+const userDataRoutes = require('./routes/userdataRoutes');
+const sendCrypto = require('./controllers/faucet/sendCryptoController');
 const userRoutes = require('./routes/userRoutes');
 const userInfoRoutes = require('./routes/userInfoRoutes');
 const cors = require('cors');
@@ -14,6 +17,8 @@ app.get('/', (req, res) => {
 
 connectDatabase()
 app.use('/api/auth', authRoutes);
+app.use('/api/user', userDataRoutes);
+app.post('/api/sendCBC', sendCrypto);
 app.use('/api', userRoutes);
 app.use('/api/info', userInfoRoutes);
 
