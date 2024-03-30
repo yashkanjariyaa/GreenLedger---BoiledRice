@@ -13,7 +13,7 @@ import Sidebar from "../components/Sidebar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Activity from "../components/Activity";
-import Calendar from "../components/Calendar";
+import Calendar from "../components/CalendarProgress";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC9f29nQHK-XJifHGXKZnaN_EhS2lHOkbA",
