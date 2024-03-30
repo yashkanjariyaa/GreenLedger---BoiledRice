@@ -5,7 +5,7 @@ import { setIndex } from "../slices/generalSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
-import medal from "../assets/Dashboard/medal.svg";
+import coin from "../assets/Dashboard/coin.svg";
 import notif from "../assets/Dashboard/notif.svg";
 import Leaderboard from "../components/Leaderboard";
 import WasteBar from "../components/WasteBar";
@@ -31,8 +31,8 @@ const Dashboard = () => {
           <h1 className="text-3xl self-center py-1 ">Hey Vedant,</h1>
 
           <div className="flex gap-2">
-            <button className="px-2 py-1 bg-[#ffe3fe] rounded-xl font-bold text-[#8d278a] max-md:hidden">
-              <img src={medal} alt="" className="w-8 inline-block" />
+            <button className="px-2 py-1 bg-[#ffff31] rounded-xl font-bold text-[#8d278a] max-md:hidden">
+              <img src={coin} alt="" className="w-8 inline-block" />
               15
             </button>
             <button className="px-2 py-1 rounded-xl  max-md:hidden">
@@ -65,6 +65,9 @@ const Dashboard = () => {
               <div className="my-5 w-[43rem] max-lg:w-[40rem]  max-md:w-[35rem]   max-sm:w-[22rem]">
                 <WasteBar />
               </div>
+            </div>
+            <div>
+            <h1 className="font-bold text-2xl">Activity </h1>
             </div>
           </div>
         </div>
