@@ -27,6 +27,7 @@ const register = async (req, res) => {
     // Create user records
     const userRecords = new UserRecords({ 
       username,
+      dateTime: Date.now(),
       streak: 0, // Initial streak
       badges: [], // Empty badges array
       points: 0, // Initial points
@@ -137,5 +138,4 @@ module.exports = {
   register,
   login,
   wallet,
-  getUsername,
 };

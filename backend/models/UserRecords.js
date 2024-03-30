@@ -2,11 +2,13 @@ const mongoose = require('mongoose');
 
 const weightHistorySchema = new mongoose.Schema({
     date: { type: Date, required: true },
+    dateTime: { type: Date, required: true },
     weight: { type: Number, required: true },
 });
 
 const userRecordsSchema = new mongoose.Schema({
     username: { type: String, required: true, ref: 'User' },
+    dateTime: { type: Date, required: true },
     streak: { type: Number, default: 0 },
     badges: [{ badgeName: String }],
     points: { type: Number, default: 0 },

@@ -13,7 +13,7 @@ import Sidebar from "../components/Sidebar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Activity from "../components/Activity";
-import Calendar from "../components/CalendarProgress";
+// import Calendar from "../components/Calendar";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC9f29nQHK-XJifHGXKZnaN_EhS2lHOkbA",
@@ -54,7 +54,7 @@ const Dashboard = () => {
     try {
       const userEmail = localStorage.getItem("email");
       console.log(userEmail);
-      await axios.get("http://localhost:3000/api/getusername", {
+      await axios.post("http://localhost:3000/api/getusername", {
         userEmail,
       }); 
     } catch (error) {
@@ -123,7 +123,7 @@ const Dashboard = () => {
               </div>
               <div>
                 <h1 className="font-bold text-2xl mb-5 inline-block self-center">Your Activity </h1>
-                <Calendar/> 
+                {/* <Calendar/>  */}
               </div>
             </div>
           </div>

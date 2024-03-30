@@ -1,6 +1,7 @@
 // controllers/userController.js
 
-const User = require("../models/UserRecords");
+const UserRecords = require("../models/UserRecords");
+const User = require("../models/User");
 const moment = require("moment");
 
 // Updating user’s streak (POST)
@@ -9,7 +10,7 @@ exports.updateStreak = async (req, res) => {
     const { username, streak } = req.body;
 
     // Update the user's streak
-    await User.findOneAndUpdate({ username: username }, { streak: streak });
+    await UserRecords.findOneAndUpdate({ username: username }, { streak: streak });
 
     res.status(200).json({ message: "User streak updated successfully" });
   } catch (error) {
@@ -24,7 +25,7 @@ exports.getStreak = async (req, res) => {
     const { username } = req.params;
 
     // Retrieve the user's streak
-    const user = await User.findOne({ username: username });
+    const user = await UserRecords.findOne({ username: username });
     const streak = user.streak;
 
     res.status(200).json({ streak });
@@ -40,7 +41,7 @@ exports.provideBadge = async (req, res) => {
     const { username, badge } = req.body;
 
     // Update the user's badges array
-    await User.findOneAndUpdate(
+    await UserRecords.findOneAndUpdate(
       { username: username },
       { $push: { badges: badge } }
     );
@@ -58,7 +59,7 @@ exports.getBadges = async (req, res) => {
     const { username } = req.params;
 
     // Retrieve the user's badges array
-    const user = await User.findOne({ username: username });
+    const user = await UserRecords.findOne({ username: username });
     const badges = user.badges;
 
     res.status(200).json({ badges });
@@ -71,7 +72,7 @@ exports.getBadges = async (req, res) => {
 exports.getLeaderboard = async (req, res) => {
   try {
     // Fetch users sorted by credits in descending order
-    const users = await User.find().sort({ credits: -1 });
+    const users = await UserRecords.find().sort({ credits: -1 });
 
     res.status(200).json(users);
   } catch (error) {
@@ -86,7 +87,7 @@ exports.getUserCredits = async (req, res) => {
     const { username } = req.params;
 
     // Retrieve the user's credits
-    const user = await User.findOne({ username: username });
+    const user = await UserRecords.findOne({ username: username });
     const credits = user.credits;
 
     res.status(200).json({ credits });
@@ -101,7 +102,7 @@ exports.updateCredits = async (req, res) => {
     const { username, credits } = req.body;
 
     // Update the user's credits
-    await User.findOneAndUpdate({ username: username }, { credits: credits });
+    await UserRecords.findOneAndUpdate({ username: username }, { credits: credits });
 
     res.status(200).json({ message: "User credits updated successfully" });
   } catch (error) {
@@ -110,69 +111,90 @@ exports.updateCredits = async (req, res) => {
   }
 };
 
+
+
 exports.updateWeightHistory = async (req, res) => {
-    try {
-        const { username, weight } = req.body;
+  try {
+    const { username, weight } = req.body;
 
-        // Get the current date without the time
-        const currentDate = new Date().toISOString().split('T')[0]; // Extracting only the date part
+    // Get the current date and time in Indian Standard Time
+    const currentTimeIST = new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
 
-        // Find the user
-        let user = await User.findOne({ username: username });
+    // Parse the current date and time in Indian Standard Time
+    const currentDateIST = new Date(currentTimeIST);
 
-        if (!user) {
-            // If user not found, create a new one
-            user = new User({
-                username: username,
-                weightHistory: []
-            });
-        }
+    // Extract date and time separately
+    const currentDate = currentDateIST.toISOString().split('T')[0];
+    const dateTime = currentDateIST;
 
-        let weightEntryUpdated = false;
+    // Find the user
+    let user = await UserRecords.findOne({ username: username });
 
-        // Check if weight entry for today already exists
-        for (let i = 0; i < user.weightHistory.length; i++) {
-            // Convert the date strings to Date objects for comparison
-            const entryDate = new Date(user.weightHistory[i].date);
-            const comparisonDate = new Date(currentDate);
-
-            if (entryDate.getTime() === comparisonDate.getTime()) {
-                // If weight entry for today exists, update the weight
-                user.weightHistory[i].weight += weight;
-                weightEntryUpdated = true;
-                break;
-            }
-        }
-
-        if (!weightEntryUpdated) {
-            // If weight entry for today doesn't exist, push a new entry
-            user.weightHistory.push({
-                date: currentDate,
-                weight: weight
-            });
-        }
-
-        // Save the user object
-        await user.save();
-
-        res.status(200).json({ message: 'User weight history updated successfully' });
-    } catch (error) {
-        console.error('Error updating user weight history:', error);
-        res.status(500).json({ error: 'Internal server error' });
+    if (!user) {
+      // If user not found, create a new one
+      user = new UserRecords({
+        username: username,
+        streak: 0,
+        badges: [],
+        points: 0,
+        credits: 0,
+        weightHistory: []
+      });
     }
-};
 
+    let weightEntryUpdated = false;
+
+    // Check if weight entry for today already exists
+    for (let i = 0; i < user.weightHistory.length; i++) {
+      // Convert the date strings to Date objects for comparison
+      const entryDate = user.weightHistory[i].date;
+
+      if (entryDate.toDateString() === currentDateIST.toDateString()) {
+        // If weight entry for today exists, update the weight
+        user.weightHistory[i].weight += weight;
+        weightEntryUpdated = true;
+        break;
+      }
+    }
+
+    if (!weightEntryUpdated) {
+      // If weight entry for today doesn't exist, push a new entry
+      user.weightHistory.push({
+        date: currentDate,
+        dateTime: dateTime,
+        weight: weight
+      });
+    }
+
+    // Save the user object
+    await user.save();
+
+    res.status(200).json({ message: 'User weight history updated successfully' });
+  } catch (error) {
+    console.error('Error updating user weight history:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
 
 
 
 // Controller for fetching weight history for a user
 exports.getWeightHistory = async (req, res) => {
   try {
-    const { username } = req.params;
+    const { email } = req.query; // Access email from req.query instead of req.body
+    const user = await User.findOne({ email });
 
-    // Retrieve the user's weight history
-    const user = await User.findOne({ username: username });
-    const weightHistory = user.weightHistory;
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    
+    // Assuming the weight history is stored in a separate schema
+    const weightHistoryUser = await UserRecords.findOne({ username: user.username });
+    if (!weightHistoryUser) {
+      return res.status(404).json({ message: 'Weight history not found for this user' });
+    }
+
+    const weightHistory = weightHistoryUser.weightHistory;
 
     res.status(200).json({ weightHistory });
   } catch (error) {
@@ -180,3 +202,22 @@ exports.getWeightHistory = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+
+exports.getActivity = async (req, res) => {
+  try {
+    // Fetch users
+    const users = await UserRecords.find();
+
+    // Sort weightHistory array within each user's record by dateTime in descending order
+    users.forEach(user => {
+      user.weightHistory.sort((a, b) => b.dateTime - a.dateTime);
+    });
+
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error fetching activity:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+

@@ -77,6 +77,7 @@ const Register = () => {
       });
   
       // Now you can redirect to dashboard
+      localStorage.setItem('email', email);
       navigate("/metamasklogin");
     } catch (error) {
       setError(error.message);

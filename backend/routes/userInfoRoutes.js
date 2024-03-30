@@ -13,6 +13,7 @@ router.post('/updateUserCredits', userController.updateCredits);
 
 // New routes for weight history
 router.post('/updateWeightHistory', userController.updateWeightHistory);
-router.get('/getWeightHistory/:username', userController.getWeightHistory);
+router.get('/getWeightHistory', userController.getWeightHistory);
+router.get('/getActivity', userController.getActivity);
 
 module.exports = router;

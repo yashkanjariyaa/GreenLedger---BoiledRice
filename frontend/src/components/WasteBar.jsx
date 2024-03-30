@@ -1,33 +1,71 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 import { waste } from '../constants/wastebar';
+import axios from "axios";
 
 Chart.register(...registerables);
 
 const WasteBar = () => {
-    const today = new Date(); // Get today's date
-    const labels = []; // Array to store labels for the last 7 days
+    const [weightHistory, setWeightHistory] = useState({});
+    const [labels, setLabels] = useState([]);
 
-    // Function to format date with Indian time
-    const formatDate = (date) => {
-        return date.toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' });
-    };
+    useEffect(() => {
+        const fetchWeightHistory = async () => {
+            try {
+                // Retrieve email from localStorage
+                const email = localStorage.getItem('email');
+                // Make API call to fetch weight history
+                const response = await axios.get('http://localhost:3000/api/info/getWeightHistory', {
+                    params: {
+                        email: email,
+                    },
+                });
 
-    // Loop to generate labels for the last 7 days
-    for (let i = 6; i >= 0; i--) {
-        const date = new Date(today);
-        date.setDate(today.getDate() - i); // Subtract days from today
-        const formattedDate = formatDate(date); // Format date with Indian time
-        labels.push(formattedDate); // Add date to labels array
-    }
+                // Extract weights from weightHistory and store in an object
+                const weightObj = {};
+                const weightLabels = [];
+
+                // Get today's date and last 6 days' dates
+                const today = new Date();
+                for (let i = 6; i >= 0; i--) {
+                    const date = new Date(today);
+                    date.setDate(today.getDate() - i);
+                    const formattedDate = date.toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' });
+                    weightLabels.push(formattedDate);
+                }
+
+                response.data.weightHistory.forEach(entry => {
+                    const date = new Date(entry.date).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' });
+                    weightObj[date] = entry.weight;
+                });
+
+                // Fill in missing dates with weight 0
+                weightLabels.forEach(label => {
+                    if (!weightObj[label]) {
+                        weightObj[label] = 0;
+                    }
+                });
+
+                // Set weight history state
+                setWeightHistory(weightObj);
+                setLabels(weightLabels);
+            } catch (error) {
+                // Handle errors
+                console.error('Error fetching weight history:', error);
+            }
+        };
+
+        // Call the function to fetch weight history on component load
+        fetchWeightHistory();
+    }, []);
 
     const data = {
         labels: labels, // Use the dynamically generated labels
         datasets: [
             {
                 label: 'Waste Amount (in kgs)',
-                data: waste, // Sample data for the bars
+                data: labels.map(label => weightHistory[label]), // Use the weights corresponding to each label
                 backgroundColor: '#25B08D', // Optional bar color
                 borderColor: 'rgba(255, 99, 132, 1)', // Optional bar border color
             },

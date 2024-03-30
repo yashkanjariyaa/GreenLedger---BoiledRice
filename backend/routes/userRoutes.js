@@ -8,7 +8,7 @@ router.use(express.json());
 router.get('/users', userController.getAllUsers);
 router.get('/users/:id', userController.getUserById);
 router.put('/updateuserinfo/:id', userController.updateUser);
-router.get('/getusername', userController.getUserByUsername);
+router.post('/getusername', userController.getUserByUsername);
 // router.delete('/users/:id', userController.deleteUserById);
 
 module.exports = router;
