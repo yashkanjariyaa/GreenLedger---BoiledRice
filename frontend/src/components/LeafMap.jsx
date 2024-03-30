@@ -35,9 +35,9 @@ const LeafMap = ({ center }) => {
   }, [center, zoom]);
 
   return (
-    <div className="w-3/4 h-3/4 mx-auto border-2 border-black">
+    <div className="w-3/4 h-3/4 mx-auto border-2 border-black max-lg:w-[90%]">
       <MapContainer
-        style={{ height: "80vh", width: "100%" }}
+        style={{ height: "75vh", width: "100%" }}
         zoom={zoom}
         center={{ lat: 19.076, lng: 72.8777 }}
         scrollWheelZoom={true}
