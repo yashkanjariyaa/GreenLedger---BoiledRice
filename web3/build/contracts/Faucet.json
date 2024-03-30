@@ -6642,14 +6642,53 @@
   },
   "networks": {
     "5777": {
-      "events": {},
+      "events": {
+        "0x7cad7fbe1215c486c724bf41124e0ed689d280724381379da844556025c463c1": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "to",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "Drip",
+          "type": "event"
+        },
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        }
+      },
       "links": {},
-      "address": "0xe2ee42aa771c512Cb262Ff3E32a38c8A73862BD6",
-      "transactionHash": "0xe819cd0fc0cb84ef86c70b2f7d475fa7c1fe7e786f806755f5556af6810b93e7"
+      "address": "0xaA9B135f1194Dd2AD15303a1A09308F966cd0A46",
+      "transactionHash": "0xe48b74c88ffb041279f3e5f8f9b3c4a94ead394ced7d1d0c88da0531b1ecf7f3"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-03-30T09:10:56.036Z",
+  "updatedAt": "2024-03-30T11:30:00.220Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
