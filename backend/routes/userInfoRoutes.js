@@ -1,3 +1,4 @@
+// routes/userInfoRoutes.js
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userInfoController');
@@ -9,5 +10,9 @@ router.get('/getBadges/:username', userController.getBadges);
 router.get('/leaderboard', userController.getLeaderboard);
 router.get('/getUserCredits/:username', userController.getUserCredits);
 router.post('/updateUserCredits', userController.updateCredits);
+
+// New routes for weight history
+router.post('/updateWeightHistory', userController.updateWeightHistory);
+router.get('/getWeightHistory/:username', userController.getWeightHistory);
 
 module.exports = router;

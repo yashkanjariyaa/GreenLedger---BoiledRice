@@ -6,7 +6,7 @@ import {setIndex} from '../slices/generalSlice'
 import waste from '../assets/Sidebar/waste.svg'
 import home from '../assets/Sidebar/home.svg'
 import book from '../assets/Sidebar/book.svg'
-import friend from '../assets/Sidebar/friend.svg'
+import qrcodelogo from '../assets/Sidebar/qrcodelogo.svg'
 import map from '../assets/Sidebar/map.svg'
 import './sidebar.css';
 
@@ -27,12 +27,16 @@ const Sidebar = () => {
         <img src={book} alt="" />
         {currentIndex==2 && <div className='w-7 border-2 border-[#292929] my-1 '></div> }
       </Link>
-      <Link to="/dashboard" className='mt-10 w-7 mx-auto' onClick={()=>dispatch(setIndex(3))}>
-        <img src={friend} alt="" />
+      <Link to="/qrcode" className='mt-10 w-7 mx-auto' onClick={()=>dispatch(setIndex(3))}>
+        <img src={qrcodelogo} alt="" />
         {currentIndex==3 && <div className='w-7 border-2 border-[#292929] my-1 '></div> }
       </Link>
       <Link to="/location" className='mt-10 w-9 mx-auto' onClick={()=>dispatch(setIndex(4))} >
         <img src={map} alt="" />
+        {currentIndex==4 && <div className='w-9 border-2 border-[#292929] my-1 '></div> }
+      </Link>
+      <Link to="/scan" className='mt-10 w-9 mx-auto' onClick={()=>dispatch(setIndex(4))} >
+        <img src={qrcodelogo} alt="" />
         {currentIndex==4 && <div className='w-9 border-2 border-[#292929] my-1 '></div> }
       </Link>
     </div>

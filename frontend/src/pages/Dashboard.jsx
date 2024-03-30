@@ -54,7 +54,7 @@ const Dashboard = () => {
     try {
       const userEmail = localStorage.getItem("email");
       console.log(userEmail);
-      await axios.post("http://localhost:3000/api/getusername", {
+      await axios.get("http://localhost:3000/api/getusername", {
         userEmail,
       }); 
     } catch (error) {

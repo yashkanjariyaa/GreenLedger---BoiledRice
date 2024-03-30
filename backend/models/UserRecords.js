@@ -1,11 +1,17 @@
 const mongoose = require('mongoose');
 
+const weightHistorySchema = new mongoose.Schema({
+    date: { type: Date, required: true },
+    weight: { type: Number, required: true },
+});
+
 const userRecordsSchema = new mongoose.Schema({
-    username: { type: String, required: true, ref:'User' },
+    username: { type: String, required: true, ref: 'User' },
     streak: { type: Number, default: 0 },
-    badges:{ badgeName: String },
+    badges: [{ badgeName: String }],
     points: { type: Number, default: 0 },
-    credits: { type: Number, default: 0 }
+    credits: { type: Number, default: 0 },
+    weightHistory: [weightHistorySchema] // Embedding weight history schema
 });
 
 const UserRecords = mongoose.model('UserRecords', userRecordsSchema);

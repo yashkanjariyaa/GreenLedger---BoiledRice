@@ -118,8 +118,24 @@ const wallet = async (req, res) => {
   }
 };
 
+const getUsername = async (req, res) => {
+  try {
+    // Assuming you pass the user's email as a parameter in the request
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.status(200).json({ username: user.username });
+  } catch (error) {
+    console.error('Error fetching username:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 module.exports = {
   register,
   login,
   wallet,
+  getUsername,
 };

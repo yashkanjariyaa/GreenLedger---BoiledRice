@@ -6,6 +6,8 @@ import Login from "./pages/Login";
 import Learn from "./pages/Learn";
 import Location from "./pages/Location";
 import MetaMask from "./pages/MetaMask";
+import QRCodeComponent from "./pages/QRCodeComponent";
+import QRCodeScanner from "./pages/QRCodeScanner";
 
 const App = () => {
   return (
@@ -17,6 +19,8 @@ const App = () => {
         <Route path="/learn" element={<Learn />} />
         <Route path="/location" element={<Location />} />
         <Route path="/metamasklogin" element={<MetaMask />} />
+        <Route path="/qrcode" element={<QRCodeComponent />} />
+        <Route path="/scan" element={<QRCodeScanner />} />
       </Routes>
     </BrowserRouter>
   );
