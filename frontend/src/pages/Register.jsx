@@ -34,6 +34,7 @@ const Register = () => {
   const [lastName, setLastName] = useState("");
   const [dob, setDob] = useState("");
   const [pincode, setPincode] = useState("");
+  const [username, setUsername] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate(); // Get the navigate function for redirection
 
@@ -44,7 +45,7 @@ const Register = () => {
       setError("Passwords do not match");
       return;
     }
-
+  
     try {
       // Register user in Firebase
       const userCredential = await createUserWithEmailAndPassword(
@@ -53,31 +54,35 @@ const Register = () => {
         password
       );
       const user = userCredential.user;
-
+  
       // Log user details
       console.log("Registered user:", {
         email: user.email,
         dob: dob,
         firstName: firstName,
         lastName: lastName,
+        pincode: pincode, // Include pincode
         // Add more details as needed
       });
-
+  
       // Save user data to backend
       await axios.post("http://localhost:3000/api/auth/register", {
         email,
+        username,
         password,
         firstName,
         lastName,
         dob,
+        pincode, // Include pincode
       });
-
+  
       // Now you can redirect to dashboard
-      navigate("/dashboard");
+      navigate("/metamasklogin");
     } catch (error) {
       setError(error.message);
     }
   };
+  
 
   const handleLogin = async () => {
     setError(null);
@@ -176,6 +181,16 @@ const Register = () => {
             placeholder="Last Name"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded-md"
             required
           />

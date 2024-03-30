@@ -6,6 +6,8 @@ const connectDatabase = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const userDataRoutes = require('./routes/userdataRoutes');
 const sendCrypto = require('./controllers/faucet/sendCryptoController');
+const userRoutes = require('./routes/userRoutes');
+const userInfoRoutes = require('./routes/userInfoRoutes');
 const cors = require('cors');
 
 app.use(cors());
@@ -17,6 +19,8 @@ connectDatabase()
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userDataRoutes);
 app.post('/api/sendCBC', sendCrypto);
+app.use('/api', userRoutes);
+app.use('/api/info', userInfoRoutes);
 
 app.listen(3000, () => {
   console.log('Server is running on port 3000');

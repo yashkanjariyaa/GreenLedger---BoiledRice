@@ -5,7 +5,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Learn from "./pages/Learn";
 import Location from "./pages/Location";
-import LeafMap from "./components/LeafMap";
+import MetaMask from "./pages/MetaMask";
 
 const App = () => {
   return (
@@ -16,6 +16,7 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/learn" element={<Learn />} />
         <Route path="/location" element={<Location />} />
+        <Route path="/metamasklogin" element={<MetaMask />} />
       </Routes>
     </BrowserRouter>
   );
