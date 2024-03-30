@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Learn from "./pages/Learn";
 import Location from "./pages/Location";
 import MetaMask from "./pages/MetaMask";
+import LeafMap from "./components/LeafMap";
 
 const App = () => {
   return (
