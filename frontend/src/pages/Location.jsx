@@ -50,7 +50,7 @@ const Location = () => {
           <h2 className="text-2xl font-bold">
             Waste Deposition walk in centers
           </h2>
-          <p className="font-light text-xl font-system-ui">
+          <p className="font-light text-xl font-[system-ui]">
             You Can Visit Waste Deposition Walk-in Centers Listed on the Map
           </p>
         </div>

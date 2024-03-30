@@ -12,6 +12,8 @@ import WasteBar from "../components/WasteBar";
 import Sidebar from "../components/Sidebar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Activity from "../components/Activity";
+import Calendar from "../components/Calendar";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC9f29nQHK-XJifHGXKZnaN_EhS2lHOkbA",
@@ -51,7 +53,7 @@ const Dashboard = () => {
   const handleUserInfo = async () => {
     try {
       const userEmail = localStorage.getItem("email");
-      console.log(userEmail)
+      console.log(userEmail);
       await axios.post("http://localhost:3000/api/getusername", {
         userEmail,
       });
@@ -113,8 +115,16 @@ const Dashboard = () => {
                 <WasteBar />
               </div>
             </div>
-            <div>
-            <h1 className="font-bold text-2xl">Activity </h1>
+            <div className="flex gap-5">
+              <div>
+                <div className="inline-block w-2 border-5 bg-green-500 rounded-xl h-2 mx-2 mb-1"></div>
+                <h1 className="font-bold text-2xl mb-5 inline-block self-center">Activity </h1>
+                <Activity/> 
+              </div>
+              <div>
+                <h1 className="font-bold text-2xl mb-5 inline-block self-center">Your Activity </h1>
+                <Calendar/> 
+              </div>
             </div>
           </div>
         </div>
