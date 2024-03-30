@@ -73,7 +73,7 @@ const Login = () => {
       });
 
       // Now you can redirect to dashboard
-      navigate("/dashboard");
+      navigate("/metamasklogin");
     } catch (error) {
       setError(error.message);
     }
