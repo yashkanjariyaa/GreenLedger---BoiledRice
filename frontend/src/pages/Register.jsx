@@ -33,8 +33,8 @@ const Register = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [dob, setDob] = useState("");
+  const [error, setError] = useState(null);
   const navigate = useNavigate(); // Get the navigate function for redirection
-
 
   // Inside your handleRegister function
   const handleRegister = async () => {
@@ -194,7 +194,7 @@ const Register = () => {
               <button
                 className="text-blue-500"
               >
-                <Link to="/login"></Link>Login here
+                <Link to="/login">Login here</Link>
               </button>
             </p>
         <button
@@ -209,6 +209,7 @@ const Register = () => {
         >
           Register with Facebook
         </button>
+        {error && <p className="text-red-500 mt-4">{error}</p>}
       </div>
     </div>
   );
