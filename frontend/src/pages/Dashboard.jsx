@@ -56,7 +56,7 @@ const Dashboard = () => {
       console.log(userEmail);
       await axios.post("http://localhost:3000/api/getusername", {
         userEmail,
-      });
+      }); 
     } catch (error) {
       console.error("Error signing out:", error);
     }

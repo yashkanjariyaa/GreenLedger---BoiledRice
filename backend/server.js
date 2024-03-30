@@ -4,6 +4,7 @@ require('dotenv').config();
 const connectDatabase = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
+const userInfoRoutes = require('./routes/userInfoRoutes');
 const cors = require('cors');
 
 app.use(cors());
@@ -14,6 +15,7 @@ app.get('/', (req, res) => {
 connectDatabase()
 app.use('/api/auth', authRoutes);
 app.use('/api', userRoutes);
+app.use('/api/info', userInfoRoutes);
 
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
