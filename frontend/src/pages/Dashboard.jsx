@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { setIndex } from "../slices/generalSlice";
+
 import { getAuth, signOut } from "firebase/auth";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+
 import { initializeApp } from "firebase/app";
 import coin from "../assets/Dashboard/coin.svg";
 import notif from "../assets/Dashboard/notif.svg";
+import logout from "../assets/Dashboard/logout.svg";
 import Leaderboard from "../components/Leaderboard";
 import WasteBar from "../components/WasteBar";
 import Sidebar from "../components/Sidebar";
@@ -14,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Activity from "../components/Activity";
 import Calendar from "../components/CalendarProgress";
+import Events from "../components/Events";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC9f29nQHK-XJifHGXKZnaN_EhS2lHOkbA",
@@ -75,22 +75,21 @@ const Dashboard = () => {
               <img src={coin} alt="" className="w-8 inline-block" />
               15
             </button>
-            <button className="px-2 py-1 rounded-xl  max-md:hidden">
+            <button className="px-1 py-1 rounded-xl  max-md:hidden">
               <img src={notif} alt="" className="w-7 inline-block" />
             </button>
             <button
-              className="p-3 rounded-xl bg-[#f9d85a] font-bold"
+              className="py-1 rounded-xl"
               onClick={handleLogout}
             >
-              <FontAwesomeIcon icon={faSignOutAlt} className="px-1" />
-              <span className="lg:inline-block hidden">Logout</span>
+              <img src={logout} alt="" className="w-7 mt-[-4.5px] inline-block"/>
             </button>
-            <button
+            {/* <button
               className="p-3 rounded-xl bg-[#f9d85a] font-bold"
               onClick={handleUserInfo}
             >
               <span className="lg:inline-block hidden">info</span>
-            </button>
+            </button> */}
           </div>
         </div>
         <div className="flex flex-col">
@@ -115,19 +114,30 @@ const Dashboard = () => {
                 <WasteBar />
               </div>
             </div>
-            <div className="flex gap-5">
+
+            
+          </div>
+        </div>
+        <div className="flex gap-10 justify-evenly max-xl:flex-col">
+
               <div>
                 <div className="inline-block w-2 border-5 bg-green-500 rounded-xl h-2 mx-2 mb-1"></div>
                 <h1 className="font-bold text-2xl mb-5 inline-block self-center">Activity </h1>
                 <Activity/> 
               </div>
+
               <div>
                 <h1 className="font-bold text-2xl mb-5 inline-block self-center">Your Activity </h1>
                 <Calendar/> 
               </div>
+
+              <div>
+                <div className="inline-block w-2 border-5 bg-green-500 rounded-xl h-2 mx-2 mb-1"></div>
+                <h1 className="font-bold text-2xl mb-5 inline-block self-center">Events </h1>
+                <Events/> 
+              </div>
+              
             </div>
-          </div>
-        </div>
       </div>
       {isModalOpen && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">

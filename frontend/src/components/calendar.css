@@ -52,12 +52,16 @@
    .react-calendar__tile--hasActive:enabled:focus {
     background: #f8f8fa;
    }
+   
    .react-calendar__tile--active {
     background: #6f48eb !important;
     border-radius: 6px;
     font-weight: bold;
     color: white;
    }
+   .highlighted-date{
+    background: none !important;
+}
    .react-calendar__tile--active:enabled:hover,
    .react-calendar__tile--active:enabled:focus {
     background: #6f48eb;
@@ -87,19 +91,40 @@
     background: #6f48eb ;
     color: white;
    }
-   .highlighted-date{
-    background-color: rgb(41, 240, 41) !important;
-    border: 2px solid green !important;
-    border-radius: 40px !important;
-    color: white !important;
-   }
-   .highlighted-date:hover{
-    background-color: rgb(41, 240, 41) !important;
-    border: 2px solid green !important;
-    border-radius: 40px !important;
-    color: white !important;
-   }
+   
    .react-calendar__tile--active{
     border: 2px !important;
     border-radius: 10px !important;
    }
+
+
+   .highlighted-date abbr {
+    background-color: rgb(41, 240, 41) !important;
+    border: 2px solid green !important;
+    border-radius: 50% !important;
+    color: white !important;
+    display: inline-flex !important; /* Use inline-flex to apply flexbox properties inline */
+    align-items: center; /* Vertically center the content */
+    justify-content: center; /* Horizontally center the content */
+    box-sizing: border-box !important;
+    width: 30px !important; /* Set a fixed width */
+    height: 30px !important; /* Set a fixed height */
+}
+   .highlighted-date abbr:hover {
+    background-color: rgb(41, 240, 41) !important;
+    border: 2px solid green !important;
+    border-radius: 50% !important;
+    color: white !important;
+    display: inline-flex !important; /* Use inline-flex to apply flexbox properties inline */
+    align-items: center; /* Vertically center the content */
+    justify-content: center; /* Horizontally center the content */
+    box-sizing: border-box !important;
+    width: 30px !important; /* Set a fixed width */
+    height: 30px !important; /* Set a fixed height */
+}
+
+
+
+
+ 
+  

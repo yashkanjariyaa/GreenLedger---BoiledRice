@@ -35,10 +35,10 @@ const Sidebar = () => {
         <img src={map} alt="" />
         {currentIndex==4 && <div className='w-9 border-2 border-[#292929] my-1 '></div> }
       </Link>
-      <Link to="/scan" className='mt-10 w-9 mx-auto' onClick={()=>dispatch(setIndex(4))} >
+      {/* <Link to="/scan" className='mt-10 w-7 mx-auto' onClick={()=>dispatch(setIndex(5))} >
         <img src={qrcodelogo} alt="" />
-        {currentIndex==4 && <div className='w-9 border-2 border-[#292929] my-1 '></div> }
-      </Link>
+        {currentIndex==5 && <div className='w-7 border-2 border-[#292929] my-1 '></div> }
+      </Link> */}
     </div>
   );
 }
