@@ -136,9 +136,9 @@ const Register = () => {
 
   return (
     <div className="flex min-h-[150vh] bg-gray-800 justify-center items-center h-screen bg-cover">
-      <div className="w-[80%]  h-[90%]  flex rounded-lg shadow-md  right">
+      <div className="w-[80%]  h-[90%] max-md:[90%] flex rounded-lg shadow-md right ">
         
-        <div className="flex h-fit min-h-fit flex-col p-5 mx-auto w-1/2">
+        <div className="flex h-fit min-h-fit flex-col p-5 mx-auto w-1/2 max-md:w-full">
           <h2 className="text-3xl mt-10 mb-5 text-center font-light text-white">
             Register
           </h2>
@@ -236,6 +236,9 @@ const Register = () => {
           >
             Register
           </button>
+          <p className="text-center my-5 text-[system-ui] font-thin text-gray-300">
+            or <span className="font-normal text-xl">Continue</span> with
+          </p>
           <div className="flex mx-auto gap-4 mt-3">
             <button
               onClick={handleGoogleRegister}
@@ -261,7 +264,7 @@ const Register = () => {
         </div>
 
         <div
-          className="w-1/2  h-full bg-cover bg-center rounded-r-lg"
+          className="w-1/2  h-full bg-cover bg-center rounded-r-lg max-md:hidden"
           style={{ backgroundImage: `url(${sidebanner})` }}
         ></div>
       </div>

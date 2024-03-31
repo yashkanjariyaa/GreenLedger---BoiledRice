@@ -145,13 +145,13 @@ const Login = () => {
       className="flex bg-gray-800 justify-center items-center h-screen bg-cover"
       
     >
-      <div className="w-[80%] h-[90%]  flex rounded-lg shadow-md  right ">
-        <div
-          className="w-1/2 h-full bg-cover bg-center rounded-l-lg"
+      <div className="w-[80%]  h-[90%] max-md:[90%] flex rounded-lg shadow-md right ">
+      <div
+          className="w-1/2  h-full bg-cover bg-center rounded-r-lg max-md:hidden"
           style={{ backgroundImage: `url(${sidebanner})` }}
         ></div>
 
-        <div className="flex flex-col p-5 mx-auto w-1/2">
+<div className="flex h-fit min-h-fit flex-col p-5 mx-auto w-1/2 max-md:w-full">
           <h2 className="text-3xl mt-10 mb-5 text-center font-light text-white">
             Login...
           </h2>
