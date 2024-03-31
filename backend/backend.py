@@ -13,10 +13,12 @@ from flask import Flask, request, jsonify, Response, send_file
 import time
 import psycopg2
 from tkinter import PhotoImage, Label
+from flask_cors import CORS
 confidence_value = Value('d', 0.1)
 box_thickness = 2
 
 app = Flask(__name__)
+CORS(app)
 
 # Define routes
 @app.route('/')
@@ -235,10 +237,12 @@ def infer(bytedata):
 
 @app.route('/processing', methods=['POST'])
 def process():
+    print(type(request.files))
     file = request.files['image']
     img = PIL.Image.open(file.stream)
-    model= YOLO("yolov8m-seg.pt")
-    results = model(img, show=True)
+    model1= YOLO("yolov8m-seg.pt")
+    model2= YOLO("best.pt")
+    results = model1.predict(img, show=True)
     return results[0].tojson()
 
 if __name__ == '__main__':
