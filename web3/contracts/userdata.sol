@@ -4,11 +4,17 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 contract UserDataContract is ERC721 {
+    struct WasteInfo {
+        uint256 date;
+        string info;
+    }
+
     struct UserData {
         string adminUsername;
         string username;
         uint256 totalDays;
         string dailyPlan;
+        mapping(uint256 => string) wasteInfo; // Mapping from date to wasteInfo
         uint256[] dates;
     }
 
@@ -30,6 +36,7 @@ contract UserDataContract is ERC721 {
     event UsernameUpdated(uint256 indexed tokenId, string newUsername);
     event TotalDaysUpdated(uint256 indexed tokenId, uint256 newTotalDays);
     event DatesUpdated(uint256 indexed tokenId, uint256[] newDates);
+    event WasteInfoUpdated(uint256 indexed tokenId, uint256 date, string newWasteInfo);
 
     function registerUser(
         string memory _adminUsername,
@@ -52,53 +59,34 @@ contract UserDataContract is ERC721 {
         userData.dailyPlan = _dailyPlan;
         userData.dates = _dates;
 
+        for (uint256 i = 0; i < _dates.length; i++) {
+            userData.wasteInfo[_dates[i]] = ""; // Initialize wasteInfo for each date
+        }
+
         _safeMint(msg.sender, newTokenId);
 
         emit UserRegistered(newTokenId, _adminUsername, _username);
     }
 
-    function updateDailyPlan(
+    function updateWasteInfo(
         uint256 _tokenId,
-        string memory _dailyPlan
+        uint256 _date,
+        string memory _wasteInfo
     ) external {
         require(_exists(_tokenId), "Token ID does not exist");
         UserData storage userData = userDataMap[_tokenId];
-        userData.dailyPlan = _dailyPlan;
-        emit DailyPlanUpdated(_tokenId, _dailyPlan);
+        require(_dateExists(userData, _date), "Date does not exist for this user");
+        userData.wasteInfo[_date] = _wasteInfo;
+        emit WasteInfoUpdated(_tokenId, _date, _wasteInfo);
     }
 
-    function updateAdminUsername(
-        uint256 _tokenId,
-        string memory _adminUsername
-    ) external {
-        require(_exists(_tokenId), "Token ID does not exist");
-        UserData storage userData = userDataMap[_tokenId];
-        userData.adminUsername = _adminUsername;
-        emit AdminUsernameUpdated(_tokenId, _adminUsername);
-    }
-
-    function updateUsername(
-        uint256 _tokenId,
-        string memory _username
-    ) external {
-        require(_exists(_tokenId), "Token ID does not exist");
-        UserData storage userData = userDataMap[_tokenId];
-        userData.username = _username;
-        emit UsernameUpdated(_tokenId, _username);
-    }
-
-    function updateTotalDays(uint256 _tokenId, uint256 _totalDays) external {
-        require(_exists(_tokenId), "Token ID does not exist");
-        UserData storage userData = userDataMap[_tokenId];
-        userData.totalDays = _totalDays;
-        emit TotalDaysUpdated(_tokenId, _totalDays);
-    }
-
-    function updateDates(uint256 _tokenId, uint256[] memory _dates) external {
-        require(_exists(_tokenId), "Token ID does not exist");
-        UserData storage userData = userDataMap[_tokenId];
-        userData.dates = _dates;
-        emit DatesUpdated(_tokenId, _dates);
+    function _dateExists(UserData storage _userData, uint256 _date) private view returns (bool) {
+        for (uint256 i = 0; i < _userData.dates.length; i++) {
+            if (_userData.dates[i] == _date) {
+                return true;
+            }
+        }
+        return false;
     }
 
     function getUserData(
@@ -111,16 +99,22 @@ contract UserDataContract is ERC721 {
             string memory username,
             uint256 totalDays,
             string memory dailyPlan,
-            uint256[] memory dates
+            uint256[] memory dates,
+            WasteInfo[] memory wasteInfos
         )
     {
         UserData storage userData = userDataMap[_tokenId];
+        WasteInfo[] memory _wasteInfos = new WasteInfo[](userData.dates.length);
+        for (uint256 i = 0; i < userData.dates.length; i++) {
+            _wasteInfos[i] = WasteInfo(userData.dates[i], userData.wasteInfo[userData.dates[i]]);
+        }
         return (
             userData.adminUsername,
             userData.username,
             userData.totalDays,
             userData.dailyPlan,
-            userData.dates
+            userData.dates,
+            _wasteInfos
         );
     }
 }
