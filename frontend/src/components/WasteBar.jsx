@@ -9,12 +9,18 @@ Chart.register(...registerables);
 const WasteBar = () => {
     const [weightHistory, setWeightHistory] = useState({});
     const [labels, setLabels] = useState([]);
+    const [isAdmin, setIsAdmin] = useState(false); // State to determine if the user is admin
 
     useEffect(() => {
         const fetchWeightHistory = async () => {
             try {
                 // Retrieve email from localStorage
                 const email = localStorage.getItem('email');
+                setIsAdmin(email === 'admin@gmail.com'); // Check if the user is admin
+
+                // If the user is admin, return early without fetching weight history
+                if (isAdmin) return;
+
                 // Make API call to fetch weight history
                 const response = await axios.get('http://localhost:3000/api/info/getWeightHistory', {
                     params: {
@@ -58,7 +64,7 @@ const WasteBar = () => {
 
         // Call the function to fetch weight history on component load
         fetchWeightHistory();
-    }, []);
+    }, [isAdmin]); // Update useEffect dependencies
 
     const data = {
         labels: labels, // Use the dynamically generated labels
@@ -79,6 +85,11 @@ const WasteBar = () => {
             },
         },
     };
+
+    // If the user is admin, don't render the graph
+    if (isAdmin) {
+        return null;
+    }
 
     return (
         <div className='w-full'>

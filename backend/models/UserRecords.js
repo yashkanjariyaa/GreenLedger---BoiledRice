@@ -13,7 +13,13 @@ const userRecordsSchema = new mongoose.Schema({
     badges: [{ badgeName: String }],
     points: { type: Number, default: 0 },
     credits: { type: Number, default: 0 },
-    weightHistory: [weightHistorySchema] // Embedding weight history schema
+    weightHistory: [weightHistorySchema], // Embedding weight history schema
+    totalDays: { 
+        type: Number,
+        default: function() {
+            return this.weightHistory.length; // Calculate totalDays based on weightHistory length
+        }
+    }
 });
 
 const UserRecords = mongoose.model('UserRecords', userRecordsSchema);

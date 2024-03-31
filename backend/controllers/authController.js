@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const UserRecords = require("../models/UserRecords");
+const Waste = require("../models/waste"); // Assuming 'waste' is the correct name of the model
 
 const register = async (req, res) => {
   try {
@@ -31,11 +32,23 @@ const register = async (req, res) => {
       streak: 0, // Initial streak
       badges: [], // Empty badges array
       points: 0, // Initial points
-      credits: 0 // Initial credits
+      credits: 0,
+      weightHistory:[
+        {
+          date: Date.now(),
+          dateTime: Date.now(),
+          weight: '0',
+        }
+      ] // Initial weight history
     });
-
-    // Save user records to database
     await userRecords.save();
+    
+    // Create Waste disposal registration
+    const waste = new Waste({
+      username,
+      selectedPlan: 'p'
+    });
+    await waste.save();
 
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
@@ -43,7 +56,6 @@ const register = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;

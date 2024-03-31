@@ -30,16 +30,19 @@ const Leaderboard = ({ id }) => {
           </tr>
           {/* Display the first 5 records */}
           {displayedUsers.map((user, index) => (
-            <tr
-              key={index}
-              className={`border-2  border-[#cecaca] ${
-                user._id === id ? "font-bold" : ""
-              }`}
-            >
-              <td className="py-2 px-4">{index + 1}</td>
-              <td className="py-2 px-4">{user.username}</td>
-              <td className="py-2 px-4">{user.credits}</td>
-            </tr>
+            // Check if username is not "admin" before rendering the row
+            user.username !== "admin" && (
+              <tr
+                key={index}
+                className={`border-2  border-[#cecaca] ${
+                  user._id === id ? "font-bold" : ""
+                }`}
+              >
+                <td className="py-2 px-4">{index + 1}</td>
+                <td className="py-2 px-4">{user.username}</td>
+                <td className="py-2 px-4">{user.credits}</td>
+              </tr>
+            )
           ))}
           {/* Check if there are more users */}
           {users.length > 5 && (

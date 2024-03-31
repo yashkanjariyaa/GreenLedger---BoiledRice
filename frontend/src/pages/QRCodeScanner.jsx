@@ -5,7 +5,7 @@ import Webcam from 'react-webcam';
 const QRCodeScanner = () => {
   const [result, setResult] = useState('');
   const [reader, setReader] = useState(null);
-
+  const email = localStorage.getItem("email")
   useEffect(() => {
     const codeReader = new BrowserQRCodeReader();
     setReader(codeReader);

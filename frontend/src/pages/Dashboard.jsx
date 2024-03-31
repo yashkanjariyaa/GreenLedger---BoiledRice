@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "../assets/Dashboard/logo.png";
 import { getAuth, signOut } from "firebase/auth";
 
@@ -40,6 +40,7 @@ const Dashboard = () => {
   const [collectQuantity, setCollectQuantity] = useState("");
   const [separateContainers, setSeparateContainers] = useState("");
   const [selectedTimeSlot, setSelectedTimeSlot] = useState("");
+  const [username, setUsername] = useState("");
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -59,17 +60,23 @@ const Dashboard = () => {
     }
   };
 
-  const handleUserInfo = async () => {
-    try {
-      const userEmail = localStorage.getItem("email");
-      console.log(userEmail);
-      await axios.post("http://localhost:3000/api/getusername", {
-        userEmail,
-      });
-    } catch (error) {
-      console.error("Error signing out:", error);
-    }
-  };
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const email = localStorage.getItem("email");
+        const response = await axios.post('http://localhost:3000/api/getusername', {
+          userEmail:email,
+        });
+
+        // Set user data in state
+        setUsername(response.data.username);
+      } catch (error) {
+        // Handle errors
+        console.error('Error fetching user data:', error);
+      }
+    };
+    fetchUser();
+  }, []);
 
   return (
     <div className="font-euclid bg">
@@ -77,7 +84,7 @@ const Dashboard = () => {
 
       <div className="p-10 ml-[60px]">
         <div className="flex justify-between">
-          <h1 className="text-3xl self-center py-1 ">Hey Vedant,</h1>
+          <h1 className="text-3xl self-center py-1 ">Hey {username},</h1>
 
           <div className="flex gap-2">
             <button className="px-2 py-1 bg-[#ffff3100] rounded-xl font-bold text-[#000000] max-md:hidden">
