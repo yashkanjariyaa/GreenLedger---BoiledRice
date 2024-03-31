@@ -1,17 +1,11 @@
-import customtkinter as ctk
-import matplotlib.pyplot as plt
-from multiprocessing import Process, Value
+
+from multiprocessing import Value
 import cv2
 from tkinter import filedialog
 from ultralytics import YOLO
-import cvzone
-import math
 import PIL.Image
-from collections import Counter
 from tkinter import *
-from flask import Flask, request, jsonify, Response, send_file 
-import time
-import psycopg2
+from flask import Flask, request
 from tkinter import PhotoImage, Label
 from flask_cors import CORS
 confidence_value = Value('d', 0.1)
