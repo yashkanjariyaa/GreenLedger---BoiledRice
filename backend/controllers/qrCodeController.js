@@ -1,6 +1,8 @@
-const QrCode = require("../models/qrcode");
-const User = require("../models/User");
-const UserRecords = require("../models/UserRecords");
+const QrCode = require('../models/qrcode');
+const User = require('../models/User');
+const UserRecords = require('../models/UserRecords');
+const WasteDisposalRegistration = require('../models/WasteDisposalRegistration');
+
 
 // Controller function to create a new QR code
 exports.createQrCode = async (req, res) => {
@@ -54,10 +56,14 @@ exports.createQrCode = async (req, res) => {
     }, currentDate:${new Date()}}`;
 
     // Save the QR code to the database
-    await newQrCode.save();
+    // await newQrCode.save();
 
-    // Return success response
-    res.status(201).json(newQrCode);
+    // Generate URL
+    const url = `http://localhost:3000/api/user/update?username=${user.username}&totalDays=${totalDays}&tokenId=${user._id}&currentDate=${Date.now()}`;
+    console.log(url)
+
+    // Return success response along with the generated URL
+    res.status(201).json({ url });
   } catch (error) {
     // Handle errors
     console.error("Error creating QR code:", error);

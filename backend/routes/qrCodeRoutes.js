@@ -6,9 +6,9 @@ const qrCodeController = require('../controllers/qrCodeController');
 router.post('/generate', qrCodeController.createQrCode);
 
 // Route to get all QR codes
-router.get('/getall', qrCodeController.getAllQrCodes);
+// router.get('/getall', qrCodeController.getAllQrCodes);
 
-// Route to get a QR code by username
-router.get('/generate/:username', qrCodeController.getQrCodeByUsername);
+// // Route to get a QR code by username
+// router.get('/generate/:username', qrCodeController.getQrCodeByUsername);
 
 module.exports = router;
