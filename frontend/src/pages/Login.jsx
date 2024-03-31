@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
+import sidebanner from "../assets/Login/sidebanner.jpeg";
+import fb from "../assets/Login/fb.png";
+import google from "../assets/Login/google.webp";
 import { initializeApp } from "firebase/app";
+import './login.css'
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -35,7 +39,6 @@ const Login = () => {
   const [dob, setDob] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate(); // Get the navigate function for redirection
-
 
   // Inside your handleRegister function
   const handleRegister = async () => {
@@ -81,24 +84,27 @@ const Login = () => {
 
   const handleLogin = async () => {
     setError(null);
-  
+
     try {
       // Send login data to backend
-      const response = await axios.post('http://localhost:3000/api/auth/login', {
-        email,
-        password
-      });
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/login",
+        {
+          email,
+          password,
+        }
+      );
 
-      console.log(response)
-      localStorage.setItem('email', email);
+      console.log(response);
+      localStorage.setItem("email", email);
       // If login is successful on the backend
       if (response.status === 200) {
         navigate("/dashboard"); // Redirect to dashboard on successful login
       } else {
-        setError('Login failed'); // Display error message if login fails
+        setError("Login failed"); // Display error message if login fails
       }
     } catch (error) {
-      setError('Login failed'); // Display error message if login fails
+      setError("Login failed"); // Display error message if login fails
     }
   };
 
@@ -135,53 +141,68 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="w-80 bg-white p-8 rounded-lg shadow-md">
-        <h2 className="text-2xl mb-4">Login</h2>
-        <div className="mb-4">
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-md"
-          />
-        </div>
-        <div className="mb-4">
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-md"
-          />
-        </div>
+    <div
+      className="flex bg-gray-800 justify-center items-center h-screen bg-cover"
+      
+    >
+      <div className="w-[80%] h-[90%]  flex rounded-lg shadow-md  right ">
+        <div
+          className="w-1/2 h-full bg-cover bg-center rounded-l-lg"
+          style={{ backgroundImage: `url(${sidebanner})` }}
+        ></div>
+
+        <div className="flex flex-col p-5 mx-auto w-1/2">
+          <h2 className="text-3xl mt-10 mb-5 text-center font-light text-white">
+            Login...
+          </h2>
+          <div className="mb-4 flex justify-center">
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-3/4  p-2  rounded-md"
+            />
+          </div>
+          <div className="mb-4 flex justify-center">
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-3/4  p-2  rounded-md"
+            />
+          </div>
+          <button
+            onClick={handleLogin}
+            className="w-3/4  p-2  rounded-xl mx-auto bg-black text-white text-bold text-xl"
+          >
+            Sign In
+          </button>
+          <p className="text-center my-5 text-[system-ui] font-thin text-gray-300">
+            or <span className="font-normal text-xl">Continue</span> with
+          </p>
+          <div className="flex mx-auto gap-4 mt-3">
             <button
-              onClick={handleLogin}
-              className="w-full bg-blue-500 text-white py-2 rounded-md"
+              onClick={handleGoogleRegister}
+              className="border-2 border-black bg-[white] p-2 rounded-lg"
             >
-              Login
+              <img src={google} alt="" className="w-14"/>
             </button>
-            <p className="text-sm mt-2">
-              Don't have an account?{" "}
-              <button
-                className="text-blue-500"
-              >
-                <Link to="/register">Register here</Link>
-              </button>
-            </p>
-        <button
-          onClick={handleGoogleRegister}
-          className="w-full bg-red-500 text-white py-2 rounded-md mt-2"
-        >
-          Login with Google
-        </button>
-        <button
-          onClick={handleFacebookRegister}
-          className="w-full bg-blue-700 text-white py-2 rounded-md mt-2"
-        >
-          Login with Facebook
-        </button>
+            <button
+              onClick={handleFacebookRegister}
+              className="border-2 border-black bg-white p-2 rounded-lg"
+            >
+              <img src={fb} alt="" className="w-14"/>
+            </button>
+          </div>
+          <p className="text-lg  text-center mt-7 text-gray-300">
+            Don't have an account?{" "}
+            <button className="">
+              <Link to="/register" className="font-bold">Register here</Link>
+            </button>
+          </p>
+        </div>
       </div>
     </div>
   );

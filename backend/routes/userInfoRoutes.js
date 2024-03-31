@@ -15,5 +15,6 @@ router.post('/updateUserCredits', userController.updateCredits);
 router.post('/updateWeightHistory', userController.updateWeightHistory);
 router.get('/getWeightHistory', userController.getWeightHistory);
 router.get('/getActivity', userController.getActivity);
+router.get('/getcalenderitems', userController.getcalenderitems);
 
 module.exports = router;

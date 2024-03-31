@@ -1,0 +1,6 @@
+flask
+tkinter
+pil
+ultralytics
+cv2
+multiprocessing
