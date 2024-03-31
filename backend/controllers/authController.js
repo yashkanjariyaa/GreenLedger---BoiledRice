@@ -44,11 +44,6 @@ const register = async (req, res) => {
     await userRecords.save();
     
     // Create Waste disposal registration
-    const waste = new Waste({
-      username,
-      selectedPlan: 'p'
-    });
-    await waste.save();
 
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
