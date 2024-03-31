@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-
+import logo from "../assets/Dashboard/logo.png";
 import { getAuth, signOut } from "firebase/auth";
 
 import { initializeApp } from "firebase/app";
-import coin from "../assets/Dashboard/coin.svg";
+import coin from "../assets/Sidebar/coin.png";
 import notif from "../assets/Dashboard/notif.svg";
 import logout from "../assets/Dashboard/logout.svg";
 import Leaderboard from "../components/Leaderboard";
@@ -31,6 +31,15 @@ const auth = getAuth(app);
 const Dashboard = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState("");
+  const [estimatedAmount, setEstimatedAmount] = useState("");
+  const [pincode, setPincode] = useState("");
+  const [wasteType, setWasteType] = useState("");
+  const [separateWaste, setSeparateWaste] = useState("");
+  const [plasticType, setPlasticType] = useState("");
+  const [collectQuantity, setCollectQuantity] = useState("");
+  const [separateContainers, setSeparateContainers] = useState("");
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState("");
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -63,7 +72,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="font-euclid">
+    <div className="font-euclid bg">
       <Sidebar />
 
       <div className="p-10 ml-[60px]">
@@ -71,9 +80,9 @@ const Dashboard = () => {
           <h1 className="text-3xl self-center py-1 ">Hey Vedant,</h1>
 
           <div className="flex gap-2">
-            <button className="px-2 py-1 bg-[#ffff31] rounded-xl font-bold text-[#8d278a] max-md:hidden">
-              <img src={coin} alt="" className="w-8 inline-block" />
-              15
+            <button className="px-2 py-1 bg-[#ffff3100] rounded-xl font-bold text-[#000000] max-md:hidden">
+              <img src={coin} alt="" className="w-8 inline-block m-1" />
+              15 CBC
             </button>
             <button className="px-1 py-1 rounded-xl  max-md:hidden">
               <img src={notif} alt="" className="w-7 inline-block" />
@@ -159,6 +168,8 @@ const Dashboard = () => {
                     id="plan"
                     name="plan"
                     className="block w-full border-black border rounded-lg p-2"
+                        value={selectedPlan}
+                    onChange={(e) => setSelectedPlan(e.target.value)}
                   >
                     <option value="dry_wet">
                       Dry waste, wet waste segregation
@@ -178,6 +189,8 @@ const Dashboard = () => {
                     name="amount"
                     step="0.1"
                     className="block w-full border-black border rounded-lg p-2"
+                    value={estimatedAmount}
+                    onChange={(e) => setEstimatedAmount(e.target.value)}
                   />
                 </div>
 
@@ -190,6 +203,8 @@ const Dashboard = () => {
                     name="address"
                     rows="3"
                     className="block w-full border-black border rounded-lg p-2"
+                    value={pincode}
+                    onChange={(e) => setPincode(e.target.value)}
                   ></textarea>
                 </div>
 
@@ -203,6 +218,8 @@ const Dashboard = () => {
                     id="waste-type"
                     name="waste-type"
                     className="block w-full border-black border rounded-lg p-2"
+                    value={wasteType}
+                    onChange={(e) => setWasteType(e.target.value)}
                   />
                 </div>
                 <div>
@@ -216,6 +233,8 @@ const Dashboard = () => {
                     id="separate-waste"
                     name="separate-waste"
                     className="block w-full border-black border rounded-lg p-2"
+                    value={separateWaste}
+                    onChange={(e) => setSeparateWaste(e.target.value)}
                   >
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
@@ -230,6 +249,8 @@ const Dashboard = () => {
                     id="plastic-type"
                     name="plastic-type"
                     className="block w-full border-black border rounded-lg p-2"
+                    value={plasticType}
+                    onChange={(e) => setPlasticType(e.target.value)}
                   />
                 </div>
                 <div>
@@ -243,6 +264,8 @@ const Dashboard = () => {
                     id="collect-quantity"
                     name="collect-quantity"
                     className="block w-full border-black border rounded-lg p-2"
+                    value = {collectQuantity}
+                    onChange={(e) => setCollectQuantity(e.target.value)}
                   >
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
@@ -259,6 +282,8 @@ const Dashboard = () => {
                     id="separate-containers"
                     name="separate-containers"
                     className="block w-full border-black border rounded-lg p-2"
+                    value={separateContainers}
+                    onChange={(e) => setSeparateContainers(e.target.value)}
                   >
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
@@ -274,6 +299,8 @@ const Dashboard = () => {
                     id="time-slot"
                     name="time-slot"
                     className="block w-full border-black border rounded-lg p-2"
+                    value={selectedTimeSlot}
+                    onChange={(e) => setSelectedTimeSlot(e.target.value)}
                   >
                     <option value="7-8">7am - 8am</option>
                     <option value="8-9">8am - 9am</option>
