@@ -29,6 +29,7 @@ const userUpdateController = async (req, res) => {
       signature,
       tokenId,
       currentDate,
+      wasteInfo
     } = req.body;
     if (currentDate === new Date()) {
       const currentData = getCurrentUserData(tokenId);

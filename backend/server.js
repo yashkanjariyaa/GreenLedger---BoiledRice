@@ -5,7 +5,7 @@ require('dotenv').config();
 const connectDatabase = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const userDataRoutes = require('./routes/userdataRoutes');
-const sendCrypto = require('./controllers/faucet/sendCryptoController');
+const sendCrypto = require('./controllers/faucet/sendCryptoFunction');
 const userRoutes = require('./routes/userRoutes');
 const userInfoRoutes = require('./routes/userInfoRoutes');
 const cors = require('cors');
