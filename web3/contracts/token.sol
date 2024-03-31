@@ -1,13 +1,21 @@
 // SPDX-License-Identifier: MIT
+// Compatible with OpenZeppelin Contracts ^5.0.0
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 
-contract MyToken is ERC20 {
-    constructor(uint256 initialSupply) ERC20("CarbonCredit", "CBC") {
-        // Verify that initialSupply is not negative
-        require(initialSupply >= 0, "Initial supply cannot be negative");
+contract CarbonCredit is ERC20, Ownable, ERC20Permit {
+    constructor()
+        ERC20("CarbonCredit", "CBC")
+        Ownable()
+        ERC20Permit("CarbonCredit")
+    {
+        _mint(msg.sender, 10000 * 10 ** decimals());
+    }
 
-        _mint(msg.sender, initialSupply);
+    function mint(address to, uint256 amount) public onlyOwner {
+        _mint(to, amount);
     }
 }

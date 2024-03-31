@@ -14,7 +14,7 @@ import axios from "axios";
 import Activity from "../components/Activity";
 import Calendar from "../components/CalendarProgress";
 import Events from "../components/Events";
-
+import "./dashboard.css";
 const firebaseConfig = {
   apiKey: "AIzaSyC9f29nQHK-XJifHGXKZnaN_EhS2lHOkbA",
   authDomain: "aceofhacks-c3cc1.firebaseapp.com",
@@ -56,7 +56,7 @@ const Dashboard = () => {
       console.log(userEmail);
       await axios.post("http://localhost:3000/api/getusername", {
         userEmail,
-      }); 
+      });
     } catch (error) {
       console.error("Error signing out:", error);
     }
@@ -78,11 +78,12 @@ const Dashboard = () => {
             <button className="px-1 py-1 rounded-xl  max-md:hidden">
               <img src={notif} alt="" className="w-7 inline-block" />
             </button>
-            <button
-              className="py-1 rounded-xl"
-              onClick={handleLogout}
-            >
-              <img src={logout} alt="" className="w-7 mt-[-4.5px] inline-block"/>
+            <button className="py-1 rounded-xl" onClick={handleLogout}>
+              <img
+                src={logout}
+                alt=""
+                className="w-7 mt-[-4.5px] inline-block"
+              />
             </button>
             {/* <button
               className="p-3 rounded-xl bg-[#f9d85a] font-bold"
@@ -114,120 +115,200 @@ const Dashboard = () => {
                 <WasteBar />
               </div>
             </div>
-
-            
           </div>
         </div>
         <div className="flex gap-10 justify-evenly max-xl:flex-col">
+          <div>
+            <div className="inline-block w-2 border-5 bg-green-500 rounded-xl h-2 mx-2 mb-1"></div>
+            <h1 className="font-bold text-2xl mb-5 inline-block self-center">
+              Activity{" "}
+            </h1>
+            <Activity />
+          </div>
 
-              <div>
-                <div className="inline-block w-2 border-5 bg-green-500 rounded-xl h-2 mx-2 mb-1"></div>
-                <h1 className="font-bold text-2xl mb-5 inline-block self-center">Activity </h1>
-                <Activity/> 
-              </div>
+          <div>
+            <h1 className="font-bold text-2xl mb-5 inline-block self-center">
+              Your Activity{" "}
+            </h1>
+            <Calendar />
+          </div>
 
-              <div>
-                <h1 className="font-bold text-2xl mb-5 inline-block self-center">Your Activity </h1>
-                <Calendar/> 
-              </div>
-
-              <div>
-                <div className="inline-block w-2 border-5 bg-green-500 rounded-xl h-2 mx-2 mb-1"></div>
-                <h1 className="font-bold text-2xl mb-5 inline-block self-center">Events </h1>
-                <Events/> 
-              </div>
-              
-            </div>
+          <div>
+            <div className="inline-block w-2 border-5 bg-green-500 rounded-xl h-2 mx-2 mb-1"></div>
+            <h1 className="font-bold text-2xl mb-5 inline-block self-center">
+              Events{" "}
+            </h1>
+            <Events />
+          </div>
+        </div>
       </div>
       {isModalOpen && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-8 rounded-lg w-1/2 h-[90%] max-lg:w-3/4 relative">
-            <h2 className="text-2xl font-bold mb-4">
-              Register for Waste Disposal
-            </h2>
-            {/* Form Components */}
-            <form className="space-y-4">
-              <div>
-                <label htmlFor="plan" className="block font-semibold">
-                  Choose a Plan
-                </label>
-                <select
-                  id="plan"
-                  name="plan"
-                  className="block w-full border-black border rounded-lg p-2"
-                >
-                  <option value="dry_wet">
-                    Dry waste, wet waste segregation
-                  </option>
-                  <option value="plastic">Plastic collection</option>
-                  <option value="biowaste">Biowaste</option>
-                  <option value="e_waste">E-waste</option>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="amount" className="block font-semibold">
-                  Amount of Waste (in kg)
-                </label>
-                <input
-                  type="number"
-                  id="amount"
-                  name="amount"
-                  step="0.1"
-                  className="block w-full border-black border rounded-lg p-2"
-                />
-              </div>
+            <div className="scroll-div">
+              <h2 className="text-2xl font-bold mb-4">
+                Register for Waste Disposal
+              </h2>
+              {/* Form Components */}
+              <form className="space-y-4">
+                <div>
+                  <label htmlFor="plan" className="block font-semibold">
+                    Choose a Plan
+                  </label>
+                  <select
+                    id="plan"
+                    name="plan"
+                    className="block w-full border-black border rounded-lg p-2"
+                  >
+                    <option value="dry_wet">
+                      Dry waste, wet waste segregation
+                    </option>
+                    <option value="plastic">Plastic collection</option>
+                    <option value="biowaste">Biowaste</option>
+                    <option value="e_waste">E-waste</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="amount" className="block font-semibold">
+                    Estimated amount of Waste (in kg) per week
+                  </label>
+                  <input
+                    type="number"
+                    id="amount"
+                    name="amount"
+                    step="0.1"
+                    className="block w-full border-black border rounded-lg p-2"
+                  />
+                </div>
 
-              <div>
-                <label htmlFor="address" className="block font-semibold">
-                  Address
-                </label>
-                <textarea
-                  id="address"
-                  name="address"
-                  rows="3"
-                  className="block w-full border-black border rounded-lg p-2"
-                ></textarea>
-              </div>
-              <div>
-                <label htmlFor="time-slot" className="block font-semibold">
-                  Choose Time Slot
-                </label>
-                <select
-                  id="time-slot"
-                  name="time-slot"
-                  className="block w-full border-black border rounded-lg p-2"
-                >
-                  <option value="7-8">7am - 8am</option>
-                  <option value="8-9">8am - 9am</option>
-                  <option value="9-10">9am - 10am</option>
-                  <option value="10-11">10am - 11am</option>
-                  <option value="11-12">11am - 12pm</option>
-                  <option value="12-13">12pm - 1pm</option>
-                  <option value="13-14">1pm - 2pm</option>
-                  <option value="14-15">2pm - 3pm</option>
-                  <option value="15-16">3pm - 4pm</option>
-                  <option value="16-17">4pm - 5pm</option>
-                  <option value="17-18">5pm - 6pm</option>
-                  <option value="18-19">6pm - 7pm</option>
-                  {/* Add more time slot options as needed */}
-                </select>
-              </div>
-              <div className="text-right absolute right-5 bottom-10">
-                <button
-                  type="button"
-                  className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg font-semibold"
-                  onClick={closeModal}
-                >
-                  Close
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-blue-500 text-white rounded-lg font-semibold ml-2"
-                >
-                  Submit
-                </button>
-              </div>
-            </form>
+                <div>
+                  <label htmlFor="address" className="block font-semibold">
+                    Pincode
+                  </label>
+                  <textarea
+                    id="address"
+                    name="address"
+                    rows="3"
+                    className="block w-full border-black border rounded-lg p-2"
+                  ></textarea>
+                </div>
+
+                {/* Additional Questions */}
+                <div>
+                  <label htmlFor="waste-type" className="block font-semibold">
+                    Type of Waste Generated
+                  </label>
+                  <input
+                    type="text"
+                    id="waste-type"
+                    name="waste-type"
+                    className="block w-full border-black border rounded-lg p-2"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="separate-waste"
+                    className="block font-semibold"
+                  >
+                    Do you separate dry waste and wet waste?
+                  </label>
+                  <select
+                    id="separate-waste"
+                    name="separate-waste"
+                    className="block w-full border-black border rounded-lg p-2"
+                  >
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="plastic-type" className="block font-semibold">
+                    Type of Plastics Produced
+                  </label>
+                  <input
+                    type="text"
+                    id="plastic-type"
+                    name="plastic-type"
+                    className="block w-full border-black border rounded-lg p-2"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="collect-quantity"
+                    className="block font-semibold"
+                  >
+                    Will you be able to collect a certain quantity over time?
+                  </label>
+                  <select
+                    id="collect-quantity"
+                    name="collect-quantity"
+                    className="block w-full border-black border rounded-lg p-2"
+                  >
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                  </select>
+                </div>
+                <div>
+                  <label
+                    htmlFor="separate-containers"
+                    className="block font-semibold"
+                  >
+                    Do you have separate containers?
+                  </label>
+                  <select
+                    id="separate-containers"
+                    name="separate-containers"
+                    className="block w-full border-black border rounded-lg p-2"
+                  >
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                  </select>
+                </div>
+
+                {/* Time Slot */}
+                <div>
+                  <label htmlFor="time-slot" className="block font-semibold">
+                    Choose Time Slot
+                  </label>
+                  <select
+                    id="time-slot"
+                    name="time-slot"
+                    className="block w-full border-black border rounded-lg p-2"
+                  >
+                    <option value="7-8">7am - 8am</option>
+                    <option value="8-9">8am - 9am</option>
+                    <option value="9-10">9am - 10am</option>
+                    <option value="10-11">10am - 11am</option>
+                    <option value="11-12">11am - 12pm</option>
+                    <option value="12-13">12pm - 1pm</option>
+                    <option value="13-14">1pm - 2pm</option>
+                    <option value="14-15">2pm - 3pm</option>
+                    <option value="15-16">3pm - 4pm</option>
+                    <option value="16-17">4pm - 5pm</option>
+                    <option value="17-18">5pm - 6pm</option>
+                    <option value="18-19">6pm - 7pm</option>
+                    {/* Add more time slot options as needed */}
+                  </select>
+                </div>
+
+                {/* Buttons */}
+                <div className="text-right absolute right-5 bottom-10">
+                  <button
+                    type="button"
+                    className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg font-semibold"
+                    onClick={closeModal}
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-4 py-2 bg-blue-500 text-white rounded-lg font-semibold ml-2"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       )}

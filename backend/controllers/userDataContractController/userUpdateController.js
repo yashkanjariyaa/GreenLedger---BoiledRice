@@ -1,5 +1,5 @@
-const {Web3} = require("web3");
-const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+const { Web3 } = require("web3");
+const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
 const abi = require("../../../web3/build/contracts/UserDataContract.json").abi;
 const contractAddress = process.env.USER_DATA_CONTRACT;
 const contract = new web3.eth.Contract(abi);
@@ -20,8 +20,17 @@ async function getCurrentUserData(tokenId) {
 
 const userUpdateController = async (req, res) => {
   try {
-    const { adminUsername, username, totalDays, dates, dailyPlan, signature, tokenId } =
-      req.body;
+    const {
+      adminUsername,
+      username,
+      totalDays,
+      dates,
+      dailyPlan,
+      signature,
+      tokenId,
+      currentDate,
+    } = req.body;
+    if (currentDate === new Date()) {
       const currentData = getCurrentUserData(tokenId);
     if (
       currentData.adminUsername === adminUsername &&
@@ -36,21 +45,29 @@ const userUpdateController = async (req, res) => {
     }
 
     let encodedABI;
-    if(currentData.adminUsername != adminUsername){
-        encodedABI = contract.methods.updateAdminUsername(tokenId, adminUsername).encodeABI();
+    if (currentData.adminUsername != adminUsername) {
+      encodedABI = contract.methods
+        .updateAdminUsername(tokenId, adminUsername)
+        .encodeABI();
     }
-    if(currentData.dailyPlan != dailyPlan){
-        encodedABI = contract.methods.updateDailyPlan(tokenId, dailyPlan).encodeABI();
+    if (currentData.dailyPlan != dailyPlan) {
+      encodedABI = contract.methods
+        .updateDailyPlan(tokenId, dailyPlan)
+        .encodeABI();
     }
-    if(currentData.username != username){
-        encodedABI = contract.methods.updateUsername(tokenId, username).encodeABI();
+    if (currentData.username != username) {
+      encodedABI = contract.methods
+        .updateUsername(tokenId, username)
+        .encodeABI();
     }
-    if(currentData.totalDays != totalDays){
-        encodedABI = contract.methods.updateTotalDays(tokenId, totalDays).encodeABI();
+    if (currentData.totalDays != totalDays) {
+      encodedABI = contract.methods
+        .updateTotalDays(tokenId, totalDays)
+        .encodeABI();
     }
-    if(currentData.dates != dates){
+    if (currentData.dates != dates) {
       encodedABI = contract.methods.updateDates(tokenId, totalDays).encodeABI();
-  }
+    }
 
     const message = web3.utils.soliditySha3(
       adminUsername,
@@ -75,6 +92,9 @@ const userUpdateController = async (req, res) => {
     const receipt = await web3.eth.sendTransaction(tx);
     console.log("Transaction receipt:", receipt);
     res.status(200).json({ success: true, receipt });
+    }else{
+      res.status(501).json({ success: false});
+    }
   } catch (error) {
     console.error("Error updating user data:", error);
     res.status(500).json({ success: false, error: error.message });
