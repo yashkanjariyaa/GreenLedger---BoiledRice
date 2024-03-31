@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 import sidebanner from "../assets/Login/sidebanner.jpeg";
+
+import header from "../assets/Landing/header.png";
+
+
 import fb from "../assets/Login/fb.png";
 import google from "../assets/Login/google.webp";
 import { initializeApp } from "firebase/app";
@@ -142,9 +146,7 @@ const Login = () => {
 
   return (
     <div
-      className="flex bg-gray-800 justify-center items-center h-screen bg-cover"
-      
-    >
+      className="flex justify-center items-center h-screen bg-cover" style={{backgroundImage:`url(${header})`}}>
       <div className="w-[80%]  h-[90%] max-md:[90%] flex rounded-lg shadow-md right ">
       <div
           className="w-1/2  h-full bg-cover bg-center rounded-r-lg max-md:hidden"
