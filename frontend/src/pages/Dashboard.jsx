@@ -31,7 +31,7 @@ const auth = getAuth(app);
 const Dashboard = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState("");
+  const [selectedPlan, setSelectedPlan] = useState("dry_wet");
   const [estimatedAmount, setEstimatedAmount] = useState("");
   const [pincode, setPincode] = useState("");
   const [wasteType, setWasteType] = useState("");
@@ -41,6 +41,17 @@ const Dashboard = () => {
   const [separateContainers, setSeparateContainers] = useState("");
   const [selectedTimeSlot, setSelectedTimeSlot] = useState("");
   const [username, setUsername] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  // Function to handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Log the selected plan type
+    console.log("Selected Plan:", selectedPlan);
+    // Reset the form submission state and close the modal
+    setSubmitted(true);
+    closeModal();
+  };
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -64,15 +75,18 @@ const Dashboard = () => {
     const fetchUser = async () => {
       try {
         const email = localStorage.getItem("email");
-        const response = await axios.post('http://localhost:3000/api/getusername', {
-          userEmail:email,
-        });
+        const response = await axios.post(
+          "http://localhost:3000/api/getusername",
+          {
+            userEmail: email,
+          }
+        );
 
         // Set user data in state
         setUsername(response.data.username);
       } catch (error) {
         // Handle errors
-        console.error('Error fetching user data:', error);
+        console.error("Error fetching user data:", error);
       }
     };
     fetchUser();
@@ -166,7 +180,7 @@ const Dashboard = () => {
                 Register for Waste Disposal
               </h2>
               {/* Form Components */}
-              <form className="space-y-4">
+              <form className="space-y-4" onSubmit={handleSubmit}>
                 <div>
                   <label htmlFor="plan" className="block font-semibold">
                     Choose a Plan
@@ -175,7 +189,7 @@ const Dashboard = () => {
                     id="plan"
                     name="plan"
                     className="block w-full border-black border rounded-lg p-2"
-                        value={selectedPlan}
+                    value={selectedPlan}
                     onChange={(e) => setSelectedPlan(e.target.value)}
                   >
                     <option value="dry_wet">
@@ -271,7 +285,7 @@ const Dashboard = () => {
                     id="collect-quantity"
                     name="collect-quantity"
                     className="block w-full border-black border rounded-lg p-2"
-                    value = {collectQuantity}
+                    value={collectQuantity}
                     onChange={(e) => setCollectQuantity(e.target.value)}
                   >
                     <option value="yes">Yes</option>

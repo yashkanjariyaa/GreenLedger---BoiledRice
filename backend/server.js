@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 connectDatabase()
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userDataRoutes);
-app.post('/api/sendCBC', sendCrypto);
+// app.post('/api/sendCBC', sendCrypto);
 app.use('/api', userRoutes);
 app.use('/api/info', userInfoRoutes);
 app.use('/api/qrcode', qrCodeRoutes);
