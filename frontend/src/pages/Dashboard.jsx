@@ -44,14 +44,32 @@ const Dashboard = () => {
   const [submitted, setSubmitted] = useState(false);
 
   // Function to handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Log the selected plan type
     console.log("Selected Plan:", selectedPlan);
-    // Reset the form submission state and close the modal
-    setSubmitted(true);
-    closeModal();
+    try {
+      const email = localStorage.getItem("email");
+      const response = await axios.post(
+        "http://localhost:3000/api/add",
+        {
+          email: email,
+          dailyPlan: selectedPlan
+        }
+      );
+  
+      // Set user data in state
+      setUsername(response.data.username);
+  
+      // Reset the form submission state and close the modal
+      setSubmitted(true);
+      closeModal();
+    } catch (error) {
+      // Handle errors
+      console.error("Error fetching user data:", error);
+    }
   };
+  
 
   const openModal = () => {
     setIsModalOpen(true);

@@ -3,19 +3,19 @@ const mongoose = require('mongoose');
 const qrcodeSchema = new mongoose.Schema({
   username: {
     type: String,
-    // required: true
+    required: true
   },
   totalDays: {
     type: Number,
-    // required: true
+    required: true
   },
   dailyPlan: {
     type: String,
-    // required: true
+    required: true
   },
   tokenId: {
     type: String,
-    // required: true
+    required: true
   }
 });
 

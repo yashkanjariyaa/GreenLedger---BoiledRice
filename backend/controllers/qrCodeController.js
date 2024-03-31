@@ -1,6 +1,7 @@
 const QrCode = require('../models/qrcode');
 const User = require('../models/User');
 const UserRecords = require('../models/UserRecords');
+const WasteDisposalRegistration = require('../models/WasteDisposalRegistration');
 
 // Controller function to create a new QR code
 exports.createQrCode = async (req, res) => {
@@ -41,52 +42,17 @@ exports.createQrCode = async (req, res) => {
     });
 
     // Save the QR code to the database
-    await newQrCode.save();
+    // await newQrCode.save();
 
-    // Return success response
-    res.status(201).json(newQrCode);
+    // Generate URL
+    const url = `http://localhost:3000/api/user/update?username=${user.username}&totalDays=${totalDays}&tokenId=${user._id}&currentDate=${Date.now()}`;
+    console.log(url)
+
+    // Return success response along with the generated URL
+    res.status(201).json({ url });
   } catch (error) {
     // Handle errors
     console.error('Error creating QR code:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-};
-
-
-
-// Get all QR codes
-exports.getAllQrCodes = async (req, res) => {
-  try {
-    // Fetch all QR codes from the database
-    const qrCodes = await QrCode.find();
-
-    // Return the QR codes
-    res.status(200).json(qrCodes);
-  } catch (error) {
-    // Handle errors
-    console.error('Error fetching QR codes:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-};
-
-// Get QR code by username
-exports.getQrCodeByUsername = async (req, res) => {
-  try {
-    const { username } = req.params;
-
-    // Find the QR code by username
-    const qrCode = await QrCode.findOne({ username });
-
-    // If QR code not found, return 404
-    if (!qrCode) {
-      return res.status(404).json({ error: 'QR code not found' });
-    }
-
-    // Return the QR code
-    res.status(200).json(qrCode);
-  } catch (error) {
-    // Handle errors
-    console.error('Error fetching QR code by username:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };

@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const UserRecords = require("../models/UserRecords");
-const Waste = require("../models/waste"); // Assuming 'waste' is the correct name of the model
+const Waste = require("../models/WasteDisposalRegistration"); // Assuming 'waste' is the correct name of the model
 
 const register = async (req, res) => {
   try {

@@ -10,6 +10,7 @@ const QRCodeComponent = () => {
   const [loading, setLoading] = useState(true); // State for loading indicator
   const [error, setError] = useState("");
   const [file, setFile] = useState();
+  const [url, setUrl] = useState("")
 
   const canvasRef = useRef(null);
 
@@ -51,7 +52,6 @@ const QRCodeComponent = () => {
   
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    
     console.log(data);
     img.onload = () => {
       
@@ -89,20 +89,29 @@ const QRCodeComponent = () => {
       .join("");
   };
 
-  const dummyData = {
-    username: "tirth",
-    totalDays: 6,
-    dailyPlan: "plastic",
-    tokenId: "12345",
-  };
+  // const dummyData = {
+  //   username: "tirth",
+  //   totalDays: 6,
+  //   dailyPlan: "plastic",
+  //   tokenId: "12345",
+  // };
 
-  const url = `{url: "http://localhost:3000/api/user/update", body:{username:${
-    localStorage.getItem("username") || ""
-  }, totalDays:${dummyData.totalDays || ""}}, dates:${
-    dummyData.dates || ""
-  }, dailyPlan: ${dummyData.dailyPlan || ""}, signature:${
-    personalSignResult || ""
-  }, tokenId:${dummyData.tokenId || ""}, currentDate:${new Date()}}`;
+  useEffect(() => {
+    const email = localStorage.getItem("email")
+    axios
+      .post("http://localhost:3000/api/qrcode/generate",{
+        email,
+      })
+      .then((response) => {
+        setUrl(response.data.url)
+        console.log(response.data.url)
+      })
+      .catch((error) => {
+        console.error("Error fetching leaderboard data:", error);
+      });
+  }, []);
+
+
 
   async function sendImage(e) {
     let form = new FormData();
