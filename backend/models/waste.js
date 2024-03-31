@@ -8,7 +8,7 @@ const WasteDisposalRegistrationSchema = new mongoose.Schema({
         type: String,
         required: true
       },
-    selectedPlan: {
+    dailyPlan: {
     type: String,
     required: true
   }
