@@ -38,10 +38,7 @@ contract UserDataContract is ERC721 {
         string memory _dailyPlan,
         uint256[] memory _dates
     ) external {
-        require(
-            bytes(_adminUsername).length > 0,
-            "Admin Username cannot be empty"
-        );
+        require(bytes(_adminUsername).length > 0, "Admin Username cannot be empty");
         require(bytes(_username).length > 0, "Username cannot be empty");
 
         uint256 newTokenId = tokenIdCounter;

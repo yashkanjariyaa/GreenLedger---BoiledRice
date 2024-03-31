@@ -8,7 +8,7 @@ import book from '../assets/Sidebar/book.svg';
 import qrcodelogo from '../assets/Sidebar/qrcodelogo.svg';
 import map from '../assets/Sidebar/map.svg';
 import './sidebar.css';
-// import logo from "../assets/Sidebar/logo.png";
+import logo from "../assets/Sidebar/logomain.png";
 
 const Sidebar = () => {
   const dispatch = useDispatch();

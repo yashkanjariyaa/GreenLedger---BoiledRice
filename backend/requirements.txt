@@ -1,6 +1,6 @@
 flask
-tkinter
-pil
+tk
+PIllow
 ultralytics
-cv2
+opencv-python
 multiprocessing

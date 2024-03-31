@@ -12,7 +12,7 @@ contract CarbonCredit is ERC20, Ownable, ERC20Permit {
         Ownable()
         ERC20Permit("CarbonCredit")
     {
-        _mint(msg.sender, 10000 * 10 ** decimals());
+        _mint(msg.sender, 100000 * 10 ** decimals());
     }
 
     function mint(address to, uint256 amount) public onlyOwner {
