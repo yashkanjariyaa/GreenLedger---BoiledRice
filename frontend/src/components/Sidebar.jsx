@@ -8,6 +8,7 @@ import book from '../assets/Sidebar/book.svg';
 import qrcodelogo from '../assets/Sidebar/qrcodelogo.svg';
 import map from '../assets/Sidebar/map.svg';
 import './sidebar.css';
+import logo from "../assets/Sidebar/logo.png";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -33,8 +34,8 @@ const Sidebar = () => {
   return (
     <div className='fixed top-0 left-0 h-screen w-16 sidebar flex flex-col'>
       <Link to="/dashboard" className='my-5 w-10 mx-auto'>
-        <img src={waste} alt="" />
-        <div className='w-10 border-2 border-[#b3b1b1] my-1 '></div>
+        <img src={logo} alt=""  className='logo'/>
+        {/* <div className='w-10 border-2 border-[#b3b1b1] my-1 '></div> */}
       </Link>
       <Link to="/dashboard" className='mt-10 w-7 mx-auto ' onClick={() => dispatch(setIndex(1))}>
         <img src={home} alt="" />
