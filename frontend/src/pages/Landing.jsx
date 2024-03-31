@@ -11,6 +11,10 @@ import mobile from "../assets/Landing/mobile.png";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
+import logo from '../assets/Sidebar/logomain.png'
+
+import './landing.css'
+
 const Landing = () => {
   return (
     <div
@@ -23,7 +27,7 @@ const Landing = () => {
             className="flex items-center text-green-300 no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
             href="#"
           >
-            GreenLedger
+            <img src={logo} alt="" className="w-10"/>GreenLedger
           </a>
         </div>
       </div>
@@ -43,7 +47,7 @@ const Landing = () => {
             Make the right decision.. Compete with your locality!
           </p>
 
-          <form className="bg-gray-900 opacity-75 w-full shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4">
+          <form className="invite opacity-75 w-full shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4">
             <div className="mb-4">
               <label
                 className="block text-blue-300 py-2 font-bold mb-2"
@@ -61,7 +65,7 @@ const Landing = () => {
 
             <div className="flex items-center justify-between pt-4">
               <button
-                className="bg-gradient-to-r from-purple-800 to-green-500 hover:from-red-500 hover:to-yellow-500 text-white font-bold py-2 px-4 rounded focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
+                className="bg-gradient-to-r from-red-500 to-yellow-500 text-white font-bold py-2 px-4 rounded focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
                 type="button"
               >
                 Submit
