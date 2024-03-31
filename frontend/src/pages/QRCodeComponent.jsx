@@ -96,13 +96,13 @@ const QRCodeComponent = () => {
     tokenId: "12345",
   };
 
-  const url = `{url: "http://localhost:3000/api/user/update", body:{username:${
-    localStorage.getItem("username") || ""
-  }, totalDays:${dummyData.totalDays || ""}}, dates:${
-    dummyData.dates || ""
-  }, dailyPlan: ${dummyData.dailyPlan || ""}, signature:${
-    personalSignResult || ""
-  }, tokenId:${dummyData.tokenId || ""}, currentDate:${new Date()}}`;
+  const url = `{url: "http://localhost:3000/api/qrcode/generate", body:{username:${
+    localStorage.getItem("username") 
+  }, totalDays:${dummyData.totalDays}}, dates:${
+    dummyData.dates 
+  }, dailyPlan: ${dummyData.dailyPlan }, signature:${
+    personalSignResult 
+  }, tokenId:${dummyData.tokenId }, currentDate:${new Date()}}`;
 
   async function sendImage(e) {
     let form = new FormData();

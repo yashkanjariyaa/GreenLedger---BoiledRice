@@ -1,26 +1,26 @@
-const QrCode = require('../models/qrcode');
-const User = require('../models/User');
-const UserRecords = require('../models/UserRecords');
+const QrCode = require("../models/qrcode");
+const User = require("../models/User");
+const UserRecords = require("../models/UserRecords");
 
 // Controller function to create a new QR code
 exports.createQrCode = async (req, res) => {
   try {
     const { email } = req.body;
-    
+
     // Fetch user details by email
     const user = await User.findOne({ email });
 
     // If user not found, return error
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: "User not found" });
     }
 
     // Fetch user records to calculate total days
     const userRecords = await UserRecords.findOne({ username: user.username });
-    
+
     // If user records not found, return error
     if (!userRecords) {
-      return res.status(404).json({ error: 'User records not found' });
+      return res.status(404).json({ error: "User records not found" });
     }
 
     // Calculate total days from user records
@@ -29,7 +29,9 @@ exports.createQrCode = async (req, res) => {
     // Check if the QR code already exists for this user
     const existingQrCode = await QrCode.findOne({ username: user.username });
     if (existingQrCode) {
-      return res.status(400).json({ error: 'QR code already exists for this user' });
+      return res
+        .status(400)
+        .json({ error: "QR code already exists for this user" });
     }
 
     // Create a new QR code
@@ -37,8 +39,19 @@ exports.createQrCode = async (req, res) => {
       username: user.username,
       totalDays: totalDays,
       dailyPlan: user.dailyPlan, // Assuming this field exists in User schema
-      tokenId: user._id       // Use user's _id as token ID
+      tokenId: user._id, // Use user's _id as token ID
     });
+
+    //string example
+    const string = `{url: "http://localhost:3000/api/user/update", body:{username:${localStorage.getItem(
+      "username"
+    )}, totalDays:${dummyData.totalDays}}, dates:${
+      dummyData.dates
+    }, dailyPlan: ${
+      dummyData.dailyPlan
+    }, signature:${personalSignResult}, tokenId:${
+      dummyData.tokenId
+    }, currentDate:${new Date()}}`;
 
     // Save the QR code to the database
     await newQrCode.save();
@@ -47,12 +60,10 @@ exports.createQrCode = async (req, res) => {
     res.status(201).json(newQrCode);
   } catch (error) {
     // Handle errors
-    console.error('Error creating QR code:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Error creating QR code:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
-
-
 
 // Get all QR codes
 exports.getAllQrCodes = async (req, res) => {
@@ -64,8 +75,8 @@ exports.getAllQrCodes = async (req, res) => {
     res.status(200).json(qrCodes);
   } catch (error) {
     // Handle errors
-    console.error('Error fetching QR codes:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Error fetching QR codes:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -79,14 +90,14 @@ exports.getQrCodeByUsername = async (req, res) => {
 
     // If QR code not found, return 404
     if (!qrCode) {
-      return res.status(404).json({ error: 'QR code not found' });
+      return res.status(404).json({ error: "QR code not found" });
     }
 
     // Return the QR code
     res.status(200).json(qrCode);
   } catch (error) {
     // Handle errors
-    console.error('Error fetching QR code by username:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Error fetching QR code by username:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
