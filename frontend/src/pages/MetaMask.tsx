@@ -69,7 +69,7 @@ const Wallet = () => {
   return (
     <div className="wallet" style={{ textAlign: "center" }}>
       <h1 style={{ margin: "50px", fontSize: "50px", fontFamily: "Orbitron" }}>
-        DeFi Cosmos
+        GREEN LEDGER
       </h1>
       <h2>Injected Provider {injectedProvider ? "DOES" : "DOES NOT"} Exist</h2>
       <div style={{ margin: "20px 0" }}>
