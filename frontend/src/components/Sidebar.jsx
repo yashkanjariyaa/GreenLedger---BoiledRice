@@ -36,7 +36,7 @@ const Sidebar = () => {
   return (
     <div className='fixed top-0 left-0 h-screen w-16 sidebar flex flex-col'>
       <Link to="/dashboard" className='my-5 w-10 mx-auto' onClick={() => handleLinkClick(1)}>
-        {/* Add your logo or other icon */}
+        <img src={logo} alt="" />
       </Link>
       <Link to="/dashboard" className='mt-10 w-7 mx-auto ' onClick={() => handleLinkClick(1)}>
         <img src={home} alt="" />

@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+
+import header from "../assets/Landing/header.png";
+
 import { initializeApp } from "firebase/app";
 import sidebanner from "../assets/Login/sidebanner.jpeg";
 import fb from "../assets/Login/fb.png";
@@ -135,7 +138,7 @@ const Register = () => {
   };
 
   return (
-    <div className="flex min-h-[150vh] bg-gray-800 justify-center items-center h-screen bg-cover">
+    <div className="flex min-h-[150vh] justify-center items-center h-screen bg-cover"  style={{backgroundImage:`url(${header})`}}>
       <div className="w-[80%]  h-[90%] max-md:[90%] flex rounded-lg shadow-md right ">
         
         <div className="flex h-fit min-h-fit flex-col p-5 mx-auto w-1/2 max-md:w-full">
