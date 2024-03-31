@@ -36,6 +36,10 @@ contract Faucet is Ownable {
         emit Drip(msg.sender, dripAmount);
     }
 
+    function getLastAccessTime(address user) external view returns (uint256) {
+        return lastAccessTime[user];
+    }
+
     function setDripAmount(uint256 _dripAmount) external onlyOwner {
         dripAmount = _dripAmount;
     }
@@ -44,7 +48,10 @@ contract Faucet is Ownable {
         dripInterval = _dripInterval;
     }
 
-    function withdrawTokens(address _token, uint256 _amount) external onlyOwner {
+    function withdrawTokens(
+        address _token,
+        uint256 _amount
+    ) external onlyOwner {
         IERC20(_token).transfer(msg.sender, _amount);
     }
 
