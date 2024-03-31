@@ -9,6 +9,7 @@ const CalendarProgress = () => {
   const [selectedDate, setSelectedDate] = useState('');
   const [correspondingWeight, setCorrespondingWeight] = useState(null);
   const [user, setUser] = useState(null);
+  const [selected, setSelected] = useState(false)
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -38,6 +39,7 @@ const CalendarProgress = () => {
     onChange(date);
     const selectedDate = new Date(date); // Convert to local timezone
     const selectedDateString = selectedDate.toLocaleDateString('en-GB'); // Adjust to local date format
+    setSelected(true)
   
     if (user && user.weightHistory) {
       const weightEntry = user.weightHistory.find(entry => {
@@ -87,7 +89,7 @@ const CalendarProgress = () => {
         <br />Keep going!
       </p>
     )}
-    {correspondingWeight === null && (
+    {correspondingWeight === null && selected && (
       <p className='mt-5 bg-[#f0fcf9] p-3 rounded-xl font-[system-ui] font-thin'>
         Phew!
         <br />You did not submit any weight on {value.toLocaleDateString('en-GB')}.
