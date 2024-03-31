@@ -33,3 +33,4 @@ async function send(address, amount) {
     console.error("Error sending tokens:", error);
   }
 }
+

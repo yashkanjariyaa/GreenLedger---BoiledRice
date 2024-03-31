@@ -103,7 +103,7 @@ const Login = () => {
       localStorage.setItem("email", email);
       // If login is successful on the backend
       if (response.status === 200) {
-        navigate("/dashboard"); // Redirect to dashboard on successful login
+        navigate("/metamasklogin"); // Redirect to dashboard on successful login
       } else {
         setError("Login failed"); // Display error message if login fails
       }
